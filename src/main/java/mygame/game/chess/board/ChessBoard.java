@@ -15,6 +15,10 @@ public class ChessBoard implements Board {
     private static final String WHITE = "White";
     private static final String BLACK = "Black";
 
+    public Piece[][] getBoard() {
+        return board;
+    }
+
     @Override
     public void init() {
         setPawn();
@@ -35,9 +39,9 @@ public class ChessBoard implements Board {
 
     private Point[] setPawnPointArray(int row) {
         Point[] points = new Point[8];
-        char a = 'a';
         for (int i = 0; i < points.length; i++) {
-            String strPoint = String.valueOf(a + i) + i;
+            char a = (char) ('a' + i);
+            String strPoint = String.valueOf(a) + row;
             Point point = new Point(strPoint);
             points[i] = point;
         }
