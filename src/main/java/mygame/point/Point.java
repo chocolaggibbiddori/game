@@ -2,9 +2,9 @@ package mygame.point;
 
 public class Point {
 
-    int x;
-    int y;
-    String strPoint;
+    private int x;
+    private int y;
+    private String strPoint;
 
     public Point(int x, int y) {
         this.x = x;
@@ -31,5 +31,17 @@ public class Point {
 
     private int setY(String strPoint) {
         return strPoint.charAt(0) - 'a';
+    }
+
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    public String getStrPoint() {
+        return strPoint;
     }
 }
