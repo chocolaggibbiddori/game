@@ -3,6 +3,7 @@ package mygame.game.chess.board;
 import lombok.extern.slf4j.Slf4j;
 import mygame.board.Board;
 import mygame.game.chess.piece.*;
+import mygame.piece.Piece;
 import mygame.point.Point;
 import org.springframework.stereotype.Component;
 
