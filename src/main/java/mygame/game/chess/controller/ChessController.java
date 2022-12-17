@@ -39,7 +39,9 @@ public class ChessController {
         chessTurn.turnStart();
         log.info("Game Start");
 
-        model.addAttribute("view", view.drawBoard());
+        model.addAttribute("view", view.drawBoard())
+                .addAttribute("turnCount", chessTurn.getCount())
+                .addAttribute("notation", chessTurn.getNotation());
         return "chess/select";
     }
 
@@ -49,7 +51,9 @@ public class ChessController {
         if (!chessValidation.checkStringPoint(strPoint)) {
             model.addAttribute("view", view.drawBoard())
                     .addAttribute("error", "잘못된 입력입니다.")
-                    .addAttribute("hasError", true);
+                    .addAttribute("hasError", true)
+                    .addAttribute("turnCount", chessTurn.getCount())
+                    .addAttribute("notation", chessTurn.getNotation());
             return "chess/select";
         }
 
@@ -57,7 +61,9 @@ public class ChessController {
         if (chessValidation.isNull(point)) {
             model.addAttribute("view", view.drawBoard())
                     .addAttribute("error", "빈 칸입니다.")
-                    .addAttribute("hasError", true);
+                    .addAttribute("hasError", true)
+                    .addAttribute("turnCount", chessTurn.getCount())
+                    .addAttribute("notation", chessTurn.getNotation());
             return "chess/select";
         }
 
@@ -65,7 +71,9 @@ public class ChessController {
         if (!chessValidation.isOurTeam(piece)) {
             model.addAttribute("view", view.drawBoard())
                     .addAttribute("error", chessTurn.getCurrentTeam() + " Team 차례입니다.")
-                    .addAttribute("hasError", true);
+                    .addAttribute("hasError", true)
+                    .addAttribute("turnCount", chessTurn.getCount())
+                    .addAttribute("notation", chessTurn.getNotation());
             return "chess/select";
         }
 

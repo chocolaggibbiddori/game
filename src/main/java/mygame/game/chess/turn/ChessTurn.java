@@ -27,12 +27,18 @@ public class ChessTurn implements Turn {
     }
 
     @Override
+    public int getCount() {
+        return count;
+    }
+
+    @Override
     public String getCurrentTeam() {
         return currentTeam;
     }
 
     @Override
     public String getNotation() {
+        if (notation == null) return "";
         return notation.getPiece() + " : " + notation.getStartPoint() + " -> " + notation.getEndPoint();
     }
 

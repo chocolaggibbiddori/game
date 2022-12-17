@@ -9,6 +9,9 @@
         <pre th:utext="${view}">보드판</pre>
     </div>
     <div style='float:right;margin-right:200px;margin-top:200px'>
+        턴: <a th:text="${turnCount}"></a>
+        <br>
+        기보: <a th:text="${notation}"></a>
         <form th:action="@{/chess/select}" th:method="post">
             움직일 기물: <input type="text" name="strPoint"> <input type="submit"/>
         </form>

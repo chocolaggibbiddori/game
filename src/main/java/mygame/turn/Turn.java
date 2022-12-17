@@ -6,6 +6,8 @@ public interface Turn {
 
     void addCount();
 
+    int getCount();
+
     String getCurrentTeam();
 
     String getNotation();
