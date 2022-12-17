@@ -8,5 +8,10 @@
     <div style='float:left'>
         <pre th:utext="${view}">보드판</pre>
     </div>
+    <div style='float:right;margin-right:200px;margin-top:200px'>
+        <form th:action="@{/chess/select}" th:method="post">
+            움직일 기물: <input type="text"> <input type="submit"/>
+        </form>
+    </div>
 </body>
 </html>
