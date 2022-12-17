@@ -1,14 +1,19 @@
 package mygame.game.chess.turn;
 
+import mygame.game.chess.name.Name;
 import mygame.turn.Turn;
 import org.springframework.stereotype.Component;
 
 @Component
 public class ChessTurn implements Turn {
 
-    private int count;
-    private String currentTeam;
+    private int count = 1;
+    private String currentTeam = Name.TEAM_WHITE;
     private Notation notation;
+
+    public void setNotation(Notation notation) {
+        this.notation = notation;
+    }
 
     @Override
     public void addCount() {
@@ -23,5 +28,10 @@ public class ChessTurn implements Turn {
     @Override
     public String getNotation() {
         return notation.getPiece() + " : " + notation.getStartPoint() + " -> " + notation.getEndPoint();
+    }
+
+    @Override
+    public void changeTeam() {
+        if ()
     }
 }
