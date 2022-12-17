@@ -142,15 +142,14 @@ public class View {
             return;
         }
 
-        Point point = new Point(rowNumberIdx, yIdx);
         if (piece == null) {
-            if (moveList.contains(point)) {
+            if (isContainsPoint(moveList, rowNumberIdx, yIdx)) {
                 sb.append(" o ");
             }else {
                 sb.append("   ");
             }
         } else {
-            if (moveList.contains(point)) {
+            if (isContainsPoint(moveList, rowNumberIdx, yIdx)) {
                 sb.append("<b>")
                         .append(piece.toString().substring(0, 1))
                         .append("o")
@@ -160,6 +159,14 @@ public class View {
                 sb.append("<b>").append(piece).append("</b>");
             }
         }
+    }
+
+    private boolean isContainsPoint(List<Point> moveList, int x, int y) {
+        for (Point point : moveList) {
+            if (point.getX() != x) return false;
+            if (point.getY() != y) return false;
+        }
+        return true;
     }
 
     private void drawColLineWithPieceFirstBlack() {

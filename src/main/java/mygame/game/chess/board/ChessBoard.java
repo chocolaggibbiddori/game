@@ -4,6 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import mygame.board.Board;
 import mygame.game.chess.name.Name;
 import mygame.game.chess.piece.*;
+import mygame.game.chess.point.ChessPoint;
 import mygame.piece.Piece;
 import mygame.point.Point;
 import org.springframework.stereotype.Component;
@@ -41,7 +42,7 @@ public class ChessBoard implements Board {
 
     @Override
     public Piece findByPoint(String strPoint) {
-        Point point = new Point(strPoint);
+        Point point = new ChessPoint(strPoint);
         return findByPoint(point);
     }
 
@@ -57,7 +58,7 @@ public class ChessBoard implements Board {
         for (int i = 0; i < points.length; i++) {
             char a = (char) ('a' + i);
             String strPoint = String.valueOf(a) + row;
-            Point point = new Point(strPoint);
+            Point point = new ChessPoint(strPoint);
             points[i] = point;
         }
         return points;
@@ -77,10 +78,10 @@ public class ChessBoard implements Board {
     }
 
     private void setRook() {
-        Point point1 = new Point("a1");
-        Point point2 = new Point("h1");
-        Point point3 = new Point("a8");
-        Point point4 = new Point("h8");
+        Point point1 = new ChessPoint("a1");
+        Point point2 = new ChessPoint("h1");
+        Point point3 = new ChessPoint("a8");
+        Point point4 = new ChessPoint("h8");
         Rook rook1 = new Rook(point1, Name.TEAM_WHITE);
         Rook rook2 = new Rook(point2, Name.TEAM_WHITE);
         Rook rook3 = new Rook(point3, Name.TEAM_BLACK);
@@ -92,10 +93,10 @@ public class ChessBoard implements Board {
     }
 
     private void setKnight() {
-        Point point1 = new Point("b1");
-        Point point2 = new Point("g1");
-        Point point3 = new Point("b8");
-        Point point4 = new Point("g8");
+        Point point1 = new ChessPoint("b1");
+        Point point2 = new ChessPoint("g1");
+        Point point3 = new ChessPoint("b8");
+        Point point4 = new ChessPoint("g8");
         Knight knight1 = new Knight(point1, Name.TEAM_WHITE);
         Knight knight2 = new Knight(point2, Name.TEAM_WHITE);
         Knight knight3 = new Knight(point3, Name.TEAM_BLACK);
@@ -107,10 +108,10 @@ public class ChessBoard implements Board {
     }
 
     private void setBishop() {
-        Point point1 = new Point("c1");
-        Point point2 = new Point("f1");
-        Point point3 = new Point("c8");
-        Point point4 = new Point("f8");
+        Point point1 = new ChessPoint("c1");
+        Point point2 = new ChessPoint("f1");
+        Point point3 = new ChessPoint("c8");
+        Point point4 = new ChessPoint("f8");
         Bishop bishop1 = new Bishop(point1, Name.TEAM_WHITE);
         Bishop bishop2 = new Bishop(point2, Name.TEAM_WHITE);
         Bishop bishop3 = new Bishop(point3, Name.TEAM_BLACK);
@@ -122,8 +123,8 @@ public class ChessBoard implements Board {
     }
 
     private void setQueen() {
-        Point point1 = new Point("d1");
-        Point point2 = new Point("d8");
+        Point point1 = new ChessPoint("d1");
+        Point point2 = new ChessPoint("d8");
         Queen queen1 = new Queen(point1, Name.TEAM_WHITE);
         Queen queen2 = new Queen(point2, Name.TEAM_BLACK);
         setInBoard(queen1, point1);
@@ -131,8 +132,8 @@ public class ChessBoard implements Board {
     }
 
     private void setKing() {
-        Point point1 = new Point("e1");
-        Point point2 = new Point("e8");
+        Point point1 = new ChessPoint("e1");
+        Point point2 = new ChessPoint("e8");
         King king1 = new King(point1, Name.TEAM_WHITE);
         King king2 = new King(point2, Name.TEAM_BLACK);
         setInBoard(king1, point1);

@@ -1,37 +1,29 @@
 package mygame.point;
 
-public class Point {
+public abstract class Point {
 
-    private int x;
-    private int y;
-    private String strPoint;
+    protected int x;
+    protected int y;
+    protected String strPoint;
 
-    public Point(int x, int y) {
+    protected Point(int x, int y) {
         this.x = x;
         this.y = y;
         strPoint = setStrPoint(x, y);
     }
 
-    public Point(String strPoint) {
+    protected Point(String strPoint) {
         String lowerStrPoint = strPoint.toLowerCase();
         this.strPoint = lowerStrPoint;
         x = setX(lowerStrPoint);
         y = setY(lowerStrPoint);
     }
 
-    private String setStrPoint(int x, int y) {
-        String before = String.valueOf(8 - x);
-        String after = String.valueOf('a' + y);
-        return after + before;
-    }
+    protected abstract String setStrPoint(int x, int y);
 
-    private int setX(String strPoint) {
-        return '8' - strPoint.charAt(1);
-    }
+    protected abstract int setX(String strPoint);
 
-    private int setY(String strPoint) {
-        return strPoint.charAt(0) - 'a';
-    }
+    protected abstract int setY(String strPoint);
 
     public int getX() {
         return x;
