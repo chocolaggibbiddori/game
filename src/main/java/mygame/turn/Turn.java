@@ -7,4 +7,6 @@ public interface Turn {
     String getCurrentTeam();
 
     String getNotation();
+
+    void changeTeam();
 }
