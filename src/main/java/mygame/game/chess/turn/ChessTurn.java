@@ -7,12 +7,18 @@ import org.springframework.stereotype.Component;
 @Component
 public class ChessTurn implements Turn {
 
-    private int count = 1;
-    private String currentTeam = Name.TEAM_WHITE;
+    private int count;
+    private String currentTeam;
     private ChessNotation notation;
 
     public void setNotation(ChessNotation notation) {
         this.notation = notation;
+    }
+
+    @Override
+    public void turnStart() {
+        count = 1;
+        currentTeam = Name.TEAM_WHITE;
     }
 
     @Override
