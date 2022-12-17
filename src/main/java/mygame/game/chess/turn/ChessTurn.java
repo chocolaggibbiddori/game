@@ -1,6 +1,5 @@
 package mygame.game.chess.turn;
 
-import mygame.turn.Notation;
 import mygame.turn.Turn;
 import org.springframework.stereotype.Component;
 

@@ -1,4 +1,4 @@
-package mygame.turn;
+package mygame.game.chess.turn;
 
 import lombok.Data;
 import mygame.piece.Piece;
