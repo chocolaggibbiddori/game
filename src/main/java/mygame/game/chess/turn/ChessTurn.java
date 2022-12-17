@@ -32,6 +32,10 @@ public class ChessTurn implements Turn {
 
     @Override
     public void changeTeam() {
-        if ()
+        if (currentTeam.equals(Name.TEAM_WHITE)) {
+            currentTeam = Name.TEAM_BLACK;
+        } else {
+            currentTeam = Name.TEAM_WHITE;
+        }
     }
 }
