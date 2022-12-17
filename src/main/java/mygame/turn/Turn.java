@@ -6,5 +6,5 @@ public interface Turn {
 
     String getCurrentTeam();
 
-    Notation getNotation();
+    String getNotation();
 }
