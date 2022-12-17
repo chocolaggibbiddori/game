@@ -49,36 +49,32 @@ public class ChessController {
     public String select(@RequestParam String strPoint, Model model) {
         strPoint = strPoint.trim().toLowerCase();
         if (!chessValidation.checkStringPoint(strPoint)) {
-            model.addAttribute("view", view.drawBoard())
-                    .addAttribute("error", "잘못된 입력입니다.")
-                    .addAttribute("hasError", true)
-                    .addAttribute("turnCount", chessTurn.getCount())
-                    .addAttribute("notation", chessTurn.getNotation());
+            addAttributeWithError(model, "잘못된 입력입니다.");
             return "chess/select";
         }
 
         ChessPoint point = new ChessPoint(strPoint);
         if (chessValidation.isNull(point)) {
-            model.addAttribute("view", view.drawBoard())
-                    .addAttribute("error", "빈 칸입니다.")
-                    .addAttribute("hasError", true)
-                    .addAttribute("turnCount", chessTurn.getCount())
-                    .addAttribute("notation", chessTurn.getNotation());
+            addAttributeWithError(model, "빈 칸입니다.");
             return "chess/select";
         }
 
         Piece piece = chessBoard.findByPoint(point);
         if (!chessValidation.isOurTeam(piece)) {
-            model.addAttribute("view", view.drawBoard())
-                    .addAttribute("error", chessTurn.getCurrentTeam() + " Team 차례입니다.")
-                    .addAttribute("hasError", true)
-                    .addAttribute("turnCount", chessTurn.getCount())
-                    .addAttribute("notation", chessTurn.getNotation());
+            addAttributeWithError(model, chessTurn.getCurrentTeam() + " Team 차례입니다.");
             return "chess/select";
         }
 
 
         return "chess/move";
+    }
+
+    private void addAttributeWithError(Model model, String errorMessage) {
+        model.addAttribute("view", view.drawBoard())
+                .addAttribute("error", errorMessage)
+                .addAttribute("hasError", true)
+                .addAttribute("turnCount", chessTurn.getCount())
+                .addAttribute("notation", chessTurn.getNotation());
     }
 
     @PostMapping("/move")
