@@ -10,8 +10,9 @@
     </div>
     <div style='float:right;margin-right:200px;margin-top:200px'>
         <form th:action="@{/chess/select}" th:method="post">
-            움직일 기물: <input type="text"> <input type="submit"/>
+            움직일 기물: <input type="text" name="strPoint"> <input type="submit"/>
         </form>
+        <div th:if="${hasError}" th:text="${error}"></div>
     </div>
 </body>
 </html>

@@ -12,6 +12,10 @@ public abstract class Piece {
         this.teamName = teamName;
     }
 
+    public String getTeamName() {
+        return teamName;
+    }
+
     @Override
     public String toString() {
         return teamName.substring(0, 1) + " " + getClass().getSimpleName().substring(0, 1);
