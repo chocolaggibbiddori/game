@@ -1,15 +1,11 @@
 package mygame.view;
 
-import lombok.RequiredArgsConstructor;
 import mygame.board.Board;
 import mygame.piece.Piece;
 import mygame.point.Point;
-import org.springframework.stereotype.Component;
 
 import java.util.List;
 
-@Component
-@RequiredArgsConstructor
 public class View {
 
     private final Board board;
@@ -17,6 +13,10 @@ public class View {
     private final String[] colAlphabet = {"a", "b", "c", "d", "e", "f", "g", "h"};
     private StringBuilder sb;
     private int rowNumberIdx;
+
+    public View(Board board) {
+        this.board = board;
+    }
 
     public String drawBoard() {
         sb = new StringBuilder();
