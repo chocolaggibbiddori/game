@@ -44,4 +44,9 @@ public class Point {
     public String getStrPoint() {
         return strPoint;
     }
+
+    @Override
+    public String toString() {
+        return strPoint;
+    }
 }
