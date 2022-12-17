@@ -5,7 +5,7 @@ import mygame.piece.Piece;
 import mygame.point.Point;
 
 @Data
-public class Notation {
+public class ChessNotation {
 
     Piece piece;
     Point startPoint;

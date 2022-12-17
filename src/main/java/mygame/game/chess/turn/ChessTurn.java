@@ -9,9 +9,9 @@ public class ChessTurn implements Turn {
 
     private int count = 1;
     private String currentTeam = Name.TEAM_WHITE;
-    private Notation notation;
+    private ChessNotation notation;
 
-    public void setNotation(Notation notation) {
+    public void setNotation(ChessNotation notation) {
         this.notation = notation;
     }
 
@@ -37,5 +37,11 @@ public class ChessTurn implements Turn {
         } else {
             currentTeam = Name.TEAM_WHITE;
         }
+    }
+
+    public void nextTurn() {
+        addCount();
+        changeTeam();
+        notation = null;
     }
 }
