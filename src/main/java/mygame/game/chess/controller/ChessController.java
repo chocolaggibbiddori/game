@@ -21,6 +21,7 @@ public class ChessController {
     @GetMapping
     public String viewGame() {
         chessBoard.init();
+        chessTurn.turnStart();
         log.info("Game Start");
         return "chess/select";
     }
