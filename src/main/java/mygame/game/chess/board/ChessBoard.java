@@ -29,6 +29,22 @@ public class ChessBoard implements Board {
         log.info("Game Init");
     }
 
+    @Override
+    public Piece findByPoint(Point point) {
+        return board[point.getX()][point.getY()];
+    }
+
+    @Override
+    public Piece findByPoint(int x, int y) {
+        return board[x][y];
+    }
+
+    @Override
+    public Piece findByPoint(String strPoint) {
+        Point point = new Point(strPoint);
+        return findByPoint(point);
+    }
+
     private void setPawn() {
         Point[] twoLine = setPawnPointArray(2);
         Point[] sevenLine = setPawnPointArray(7);
