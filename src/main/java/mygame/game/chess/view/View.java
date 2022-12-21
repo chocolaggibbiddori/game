@@ -1,4 +1,4 @@
-package mygame.view;
+package mygame.game.chess.view;
 
 import mygame.board.Board;
 import mygame.piece.Piece;
@@ -163,10 +163,11 @@ public class View {
 
     private boolean isContainsPoint(List<Point> moveList, int x, int y) {
         for (Point point : moveList) {
-            if (point.getX() != x) return false;
-            if (point.getY() != y) return false;
+            if (point.getX() == x && point.getY() == y) {
+                return true;
+            }
         }
-        return true;
+        return false;
     }
 
     private void drawColLineWithPieceFirstBlack() {

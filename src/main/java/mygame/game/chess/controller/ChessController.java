@@ -5,15 +5,16 @@ import mygame.board.Board;
 import mygame.game.chess.point.ChessPoint;
 import mygame.game.chess.validation.ChessValidation;
 import mygame.piece.Piece;
+import mygame.point.Point;
 import mygame.turn.Turn;
-import mygame.view.View;
+import mygame.game.chess.view.View;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import java.util.List;
 
 @Slf4j
 @Controller
@@ -41,12 +42,12 @@ public class ChessController {
 
         model.addAttribute("view", view.drawBoard())
                 .addAttribute("turnCount", chessTurn.getCount())
-                .addAttribute("notation", chessTurn.getNotation());
+                .addAttribute("notation", chessTurn.getStringNotation());
         return "chess/select";
     }
 
     @PostMapping("/select")
-    public String select(@RequestParam String strPoint, Model model) {
+    public String select(@RequestParam String strPoint, Model model, RedirectAttributes redirectAttributes) {
         strPoint = strPoint.trim().toLowerCase();
         if (!chessValidation.checkStringPoint(strPoint)) {
             addAttributeWithError(model, "잘못된 입력입니다.");
@@ -65,8 +66,8 @@ public class ChessController {
             return "chess/select";
         }
 
-
-        return "chess/move";
+        redirectAttributes.addAttribute("point", strPoint);
+        return "redirect:/chess/{point}/move";
     }
 
     private void addAttributeWithError(Model model, String errorMessage) {
@@ -74,11 +75,27 @@ public class ChessController {
                 .addAttribute("error", errorMessage)
                 .addAttribute("hasError", true)
                 .addAttribute("turnCount", chessTurn.getCount())
-                .addAttribute("notation", chessTurn.getNotation());
+                .addAttribute("notation", chessTurn.getStringNotation());
     }
 
-    @PostMapping("/move")
-    public String move() {
+    @GetMapping("/{point}/move")
+    public String move(@PathVariable Point point, Model model) {
+        Piece piece = chessBoard.findByPoint(point);
+        List<Point> moveList = chessValidation.moveList(piece);
+        log.info("select={}, {}", piece, point);
+        log.info("moveList={}", moveList);
+
+        model.addAttribute("view", view.drawBoard(moveList))
+                .addAttribute("turnCount", chessTurn.getCount())
+                .addAttribute("notation", chessTurn.getStringNotation());
+        return "chess/move";
+    }
+
+    @PostMapping("/{point}/move")
+    public String move(@PathVariable Point point) {
+        Piece piece = chessBoard.findByPoint(point);
+        log.info("enter move");
+        log.info("piece={}", piece);
         return "chess/select";
     }
 }

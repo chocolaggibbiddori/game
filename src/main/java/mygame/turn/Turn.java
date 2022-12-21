@@ -10,7 +10,9 @@ public interface Turn {
 
     String getCurrentTeam();
 
-    String getNotation();
+    String getStringNotation();
 
     void changeTeam();
+
+    void nextTurn();
 }

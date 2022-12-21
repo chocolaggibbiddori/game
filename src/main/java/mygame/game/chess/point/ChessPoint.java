@@ -15,7 +15,7 @@ public class ChessPoint extends Point {
     @Override
     protected String setStrPoint(int x, int y) {
         String before = String.valueOf(8 - x);
-        String after = String.valueOf('a' + y);
+        String after = String.valueOf((char) ('a' + y));
         return after + before;
     }
 

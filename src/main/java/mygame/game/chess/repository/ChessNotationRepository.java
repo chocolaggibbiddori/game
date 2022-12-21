@@ -14,4 +14,8 @@ public class ChessNotationRepository {
     public void save(int turnNumber, ChessNotation notation) {
         notationList.add(turnNumber, notation);
     }
+
+    public ChessNotation getNotation(int idx) {
+        return notationList.get(idx);
+    }
 }

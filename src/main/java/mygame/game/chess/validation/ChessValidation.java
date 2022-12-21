@@ -3,10 +3,17 @@ package mygame.game.chess.validation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import mygame.board.Board;
+import mygame.game.chess.piece.*;
 import mygame.game.chess.point.ChessPoint;
+import mygame.game.chess.repository.ChessNotationRepository;
+import mygame.game.chess.turn.ChessNotation;
 import mygame.piece.Piece;
+import mygame.point.Point;
 import mygame.turn.Turn;
 import org.springframework.stereotype.Component;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Slf4j
 @Component
@@ -15,6 +22,7 @@ public class ChessValidation {
 
     private final Board chessBoard;
     private final Turn chessTurn;
+    private final ChessNotationRepository notationRepository;
 
     public boolean checkStringPoint(String strPoint) {
         if (strPoint.length() != 2) {
@@ -52,5 +60,135 @@ public class ChessValidation {
             return false;
         }
         return true;
+    }
+
+    public List<Point> moveList(Piece piece) {
+        if (piece == null) return null;
+        if (piece instanceof Pawn) {
+            return moveList((Pawn) piece);
+        } else if (piece instanceof Rook) {
+            return moveList((Rook) piece);
+        } else if (piece instanceof Knight) {
+            return moveList((Knight) piece);
+        } else if (piece instanceof Bishop) {
+            return moveList((Bishop) piece);
+        } else if (piece instanceof Queen) {
+            return moveList((Queen) piece);
+        } else if (piece instanceof King) {
+            return moveList((King) piece);
+        }
+        return null;
+    }
+
+    private List<Point> moveList(Pawn pawn) {
+        List<Point> moveList = new ArrayList<>();
+        int x = pawn.getPoint().getX();
+        int y = pawn.getPoint().getY();
+
+        moveForwardAtPawn(pawn, moveList, x, y);
+        attackDiagonally(pawn, moveList, x, y);
+        enpassant(pawn, moveList, x, y);
+        return moveList;
+    }
+
+    private void moveForwardAtPawn(Pawn pawn, List<Point> moveList, int x, int y) {
+        int front = x + pawn.getMoveDirect();
+        Piece blockedPiece = chessBoard.findByPoint(front, y);
+
+        if (blockedPiece != null) {
+            return;
+        }
+
+        ChessPoint firstPoint = new ChessPoint(front, y);
+        if (isOutOfBoard(firstPoint)) {
+            return;
+        }
+
+        moveList.add(firstPoint);
+
+        if (!pawn.isFirstMove()) {
+            return;
+        }
+
+        int twoFront = front + pawn.getMoveDirect();
+        ChessPoint secondPoint = new ChessPoint(twoFront, y);
+        if (isOutOfBoard(secondPoint)) {
+            return;
+        }
+
+        blockedPiece = chessBoard.findByPoint(secondPoint);
+        if (blockedPiece == null) {
+            moveList.add(secondPoint);
+        }
+    }
+
+    private boolean isOutOfBoard(Point point) {
+        if (point.getX() < 0 || point.getX() > 7) {
+            return true;
+        }
+        if (point.getY() < 0 || point.getY() > 7) {
+            return true;
+        }
+        return false;
+    }
+
+    private void attackDiagonally(Pawn pawn, List<Point> moveList, int x, int y) {
+        int front = x + pawn.getMoveDirect();
+        attackDiagonally(moveList, front, y - 1, pawn.getTeamName());
+        attackDiagonally(moveList, front, y + 1, pawn.getTeamName());
+    }
+
+    private void attackDiagonally(List<Point> moveList, int x, int y, String teamName) {
+        ChessPoint point = new ChessPoint(x, y);
+        if (isOutOfBoard(point)) {
+            return;
+        }
+
+        Piece piece = chessBoard.findByPoint(point);
+        if (piece == null) {
+            return;
+        }
+
+        if (piece.getTeamName().equals(teamName)) {
+            return;
+        }
+
+        moveList.add(point);
+    }
+
+    private void enpassant(Pawn pawn, List<Point> moveList, int x, int y) {
+        if (chessTurn.getCount() == 1) {
+            return;
+        }
+        enpassant(pawn, moveList, x, y - 1, pawn.getTeamName());
+        enpassant(pawn, moveList, x, y + 1, pawn.getTeamName());
+    }
+
+    private void enpassant(Pawn pawn, List<Point> moveList, int x, int y, String teamName) {
+        ChessPoint point = new ChessPoint(x, y);
+        if (isOutOfBoard(point)) {
+            return;
+        }
+
+        Piece piece = chessBoard.findByPoint(point);
+        if (piece == null) {
+            return;
+        }
+        if (!(piece instanceof Pawn)) {
+            return;
+        }
+        if (piece.getTeamName().equals(teamName)) {
+            return;
+        }
+
+        ChessNotation preNotation = notationRepository.getNotation(chessTurn.getCount() - 1);
+        if (preNotation.getPiece() != piece) {
+            return;
+        }
+
+        if (((Pawn) piece).getMoveCount() == 1) {
+            ChessPoint enpassantPoint = new ChessPoint(x + pawn.getMoveDirect(), y);
+            moveList.add(enpassantPoint);
+        }
     }
 }

@@ -12,6 +12,14 @@ public abstract class Piece {
         this.teamName = teamName;
     }
 
+    public void setPoint(Point point) {
+        this.point = point;
+    }
+
+    public Point getPoint() {
+        return point;
+    }
+
     public String getTeamName() {
         return teamName;
     }
