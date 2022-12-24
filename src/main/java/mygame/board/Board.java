@@ -14,4 +14,6 @@ public interface Board {
     Piece findByPoint(String strPoint);
 
     Piece move(Piece piece, Point endPoint);
+
+    void clear();
 }

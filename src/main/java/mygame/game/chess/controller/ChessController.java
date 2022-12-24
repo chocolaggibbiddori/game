@@ -1,11 +1,12 @@
 package mygame.game.chess.controller;
 
 import lombok.extern.slf4j.Slf4j;
-import mygame.board.Board;
+import mygame.game.chess.board.ChessBoard;
 import mygame.game.chess.piece.ChessPiece;
 import mygame.game.chess.piece.King;
 import mygame.game.chess.piece.Pawn;
 import mygame.game.chess.point.ChessPoint;
+import mygame.game.chess.turn.ChessNotation;
 import mygame.game.chess.turn.ChessTurn;
 import mygame.game.chess.validation.ChessValidation;
 import mygame.piece.Piece;
@@ -23,13 +24,13 @@ import java.util.List;
 @RequestMapping("/chess")
 public class ChessController {
 
-    private final Board chessBoard;
+    private final ChessBoard chessBoard;
     private final ChessTurn chessTurn;
     private final ChessValidation chessValidation;
     private final View view;
 
     @Autowired
-    public ChessController(Board chessBoard, ChessTurn chessTurn, ChessValidation chessValidation) {
+    public ChessController(ChessBoard chessBoard, ChessTurn chessTurn, ChessValidation chessValidation) {
         this.chessBoard = chessBoard;
         this.chessTurn = chessTurn;
         this.chessValidation = chessValidation;
@@ -131,10 +132,27 @@ public class ChessController {
             if (((Pawn) piece).isFirstMove()) {
                 ((Pawn) piece).setFirstMoveToFalse();
             }
+            if (isEnpassant((Pawn) piece)) {
+                int count = chessTurn.getCount();
+                ChessNotation notation = chessTurn.getRepository().getNotation(count - 1);
+                chessBoard.remove(notation.getEndPoint());
+            }
         }
 
-        chessTurn.setNotation(piece, piece.getPoint(), endPoint);
+        chessTurn.setNotation(piece, startPoint, endPoint);
         chessTurn.nextTurn();
         return "redirect:/chess/select";
+    }
+
+    private boolean isEnpassant(Pawn pawn) {
+        int count = chessTurn.getCount();
+        if (count < 2) {
+            return false;
+        }
+
+        ChessNotation notation = chessTurn.getRepository().getNotation(count - 1);
+        int x = pawn.getPoint().getX() - pawn.getMoveDirect();
+        int y = pawn.getPoint().getY();
+        return notation.getChessPiece() == chessBoard.findByPoint(x, y);
     }
 }

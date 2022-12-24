@@ -360,6 +360,7 @@ public class ChessValidation {
     }
 
     private List<ChessPoint> moveList(King king) {
+        // TODO: 2022/12/24 캐슬링
         List<ChessPoint> moveList = new ArrayList<>();
         int[][] checkList = {{-1, -1}, {-1, 0}, {-1, 1}, {0, -1}, {0, 1}, {1, -1}, {1, 0}, {1, 1}};
         int x = king.getPoint().getX();

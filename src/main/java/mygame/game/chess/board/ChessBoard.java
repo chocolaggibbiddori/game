@@ -9,6 +9,8 @@ import mygame.piece.Piece;
 import mygame.point.Point;
 import org.springframework.stereotype.Component;
 
+import java.util.Arrays;
+
 @Slf4j
 @Component
 public class ChessBoard implements Board {
@@ -17,6 +19,10 @@ public class ChessBoard implements Board {
 
     public ChessPiece[][] getBoard() {
         return board.clone();
+    }
+
+    public void remove(Point point) {
+        board[point.getX()][point.getY()] = null;
     }
 
     @Override
@@ -52,6 +58,7 @@ public class ChessBoard implements Board {
 
     @Override
     public void init() {
+        clear();
         setPawn();
         setRook();
         setKnight();
@@ -155,11 +162,10 @@ public class ChessBoard implements Board {
         setInBoard(king2, point2);
     }
 
+    @Override
     public void clear() {
-        for (Piece[] pieces : board) {
-            for (Piece piece : pieces) {
-                piece = null;
-            }
+        for (ChessPiece[] chessPieces : board) {
+            Arrays.fill(chessPieces, null);
         }
     }
 }
