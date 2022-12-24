@@ -9,6 +9,8 @@ import mygame.piece.Piece;
 import mygame.point.Point;
 import org.springframework.stereotype.Component;
 
+import java.util.Arrays;
+
 @Slf4j
 @Component
 public class ChessBoard implements Board {
@@ -138,5 +140,13 @@ public class ChessBoard implements Board {
         King king2 = new King(point2, Name.TEAM_BLACK);
         setInBoard(king1, point1);
         setInBoard(king2, point2);
+    }
+
+    public void clear() {
+        for (Piece[] pieces : board) {
+            for (Piece piece : pieces) {
+                piece = null;
+            }
+        }
     }
 }

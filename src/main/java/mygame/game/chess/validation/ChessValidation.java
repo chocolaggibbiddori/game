@@ -215,16 +215,16 @@ public class ChessValidation {
         int i = 1;
         while (isContinue) {
             if (direct1) {
-                direct1 = moveAtRook(rook, moveList, x - i, y);
+                direct1 = checkPointOnMoveInLine(rook.getTeamName(), moveList, x - i, y);
             }
             if (direct2) {
-                direct2 = moveAtRook(rook, moveList, x + i, y);
+                direct2 = checkPointOnMoveInLine(rook.getTeamName(), moveList, x + i, y);
             }
             if (direct3) {
-                direct3 = moveAtRook(rook, moveList, x, y - i);
+                direct3 = checkPointOnMoveInLine(rook.getTeamName(), moveList, x, y - i);
             }
             if (direct4) {
-                direct4 = moveAtRook(rook, moveList, x, y + i);
+                direct4 = checkPointOnMoveInLine(rook.getTeamName(), moveList, x, y + i);
             }
 
             isContinue = direct1 || direct2 || direct3 || direct4;
@@ -234,7 +234,7 @@ public class ChessValidation {
         return moveList;
     }
 
-    private boolean moveAtRook(Rook rook, List<Point> moveList, int x, int y) {
+    private boolean checkPointOnMoveInLine(String teamName, List<Point> moveList, int x, int y) {
         ChessPoint point = new ChessPoint(x, y);
         if (isOutOfBoard(point)) {
             return false;
@@ -245,7 +245,7 @@ public class ChessValidation {
             moveList.add(point);
             return true;
         }
-        if (!piece.getTeamName().equals(rook.getTeamName())) {
+        if (!piece.getTeamName().equals(teamName)) {
             moveList.add(point);
         }
         return false;
@@ -292,16 +292,16 @@ public class ChessValidation {
         int i = 1;
         while (isContinue) {
             if (direct1) {
-                direct1 = moveAtBishop(bishop, moveList, x + i, y + i);
+                direct1 = checkPointOnMoveInLine(bishop.getTeamName(), moveList, x + i, y + i);
             }
             if (direct2) {
-                direct2 = moveAtBishop(bishop, moveList, x + i, y - i);
+                direct2 = checkPointOnMoveInLine(bishop.getTeamName(), moveList, x + i, y - i);
             }
             if (direct3) {
-                direct3 = moveAtBishop(bishop, moveList, x - i, y + i);
+                direct3 = checkPointOnMoveInLine(bishop.getTeamName(), moveList, x - i, y + i);
             }
             if (direct4) {
-                direct4 = moveAtBishop(bishop, moveList, x - i, y - i);
+                direct4 = checkPointOnMoveInLine(bishop.getTeamName(), moveList, x - i, y - i);
             }
 
             isContinue = direct1 || direct2 || direct3 || direct4;
@@ -309,23 +309,6 @@ public class ChessValidation {
         }
 
         return moveList;
-    }
-
-    private boolean moveAtBishop(Bishop bishop, List<Point> moveList, int x, int y) {
-        ChessPoint point = new ChessPoint(x, y);
-        if (isOutOfBoard(point)) {
-            return false;
-        }
-
-        Piece piece = chessBoard.findByPoint(point);
-        if (piece == null) {
-            moveList.add(point);
-            return true;
-        }
-        if (!piece.getTeamName().equals(bishop.getTeamName())) {
-            moveList.add(point);
-        }
-        return false;
     }
 
     private List<Point> moveList(Queen queen) {
@@ -345,28 +328,28 @@ public class ChessValidation {
         int i = 1;
         while (isContinue) {
             if (direct1) {
-                direct1 = moveAtQueen(queen, moveList, x + i, y);
+                direct1 = checkPointOnMoveInLine(queen.getTeamName(), moveList, x + i, y);
             }
             if (direct2) {
-                direct2 = moveAtQueen(queen, moveList, x - i, y);
+                direct2 = checkPointOnMoveInLine(queen.getTeamName(), moveList, x - i, y);
             }
             if (direct3) {
-                direct3 = moveAtQueen(queen, moveList, x, y + i);
+                direct3 = checkPointOnMoveInLine(queen.getTeamName(), moveList, x, y + i);
             }
             if (direct4) {
-                direct4 = moveAtQueen(queen, moveList, x, y - i);
+                direct4 = checkPointOnMoveInLine(queen.getTeamName(), moveList, x, y - i);
             }
             if (direct5) {
-                direct5 = moveAtQueen(queen, moveList, x + i, y + i);
+                direct5 = checkPointOnMoveInLine(queen.getTeamName(), moveList, x + i, y + i);
             }
             if (direct6) {
-                direct6 = moveAtQueen(queen, moveList, x + i, y - i);
+                direct6 = checkPointOnMoveInLine(queen.getTeamName(), moveList, x + i, y - i);
             }
             if (direct7) {
-                direct7 = moveAtQueen(queen, moveList, x - i, y + i);
+                direct7 = checkPointOnMoveInLine(queen.getTeamName(), moveList, x - i, y + i);
             }
             if (direct8) {
-                direct8 = moveAtQueen(queen, moveList, x - i, y - i);
+                direct8 = checkPointOnMoveInLine(queen.getTeamName(), moveList, x - i, y - i);
             }
 
             isContinue = direct1 || direct2 || direct3 || direct4 || direct5 || direct6 || direct7 || direct8;
@@ -374,23 +357,6 @@ public class ChessValidation {
         }
 
         return moveList;
-    }
-
-    private boolean moveAtQueen(Queen queen, List<Point> moveList, int x, int y) {
-        ChessPoint point = new ChessPoint(x, y);
-        if (isOutOfBoard(point)) {
-            return false;
-        }
-
-        Piece piece = chessBoard.findByPoint(point);
-        if (piece == null) {
-            moveList.add(point);
-            return true;
-        }
-        if (!piece.getTeamName().equals(queen.getTeamName())) {
-            moveList.add(point);
-        }
-        return false;
     }
 
     private List<Point> moveList(King king) {
