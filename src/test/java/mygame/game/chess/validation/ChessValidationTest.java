@@ -2,10 +2,7 @@ package mygame.game.chess.validation;
 
 import mygame.game.chess.board.ChessBoard;
 import mygame.game.chess.name.Name;
-import mygame.game.chess.piece.Bishop;
-import mygame.game.chess.piece.Knight;
-import mygame.game.chess.piece.Pawn;
-import mygame.game.chess.piece.Rook;
+import mygame.game.chess.piece.*;
 import mygame.game.chess.point.ChessPoint;
 import mygame.game.chess.repository.ChessNotationRepository;
 import mygame.game.chess.turn.ChessTurn;
@@ -13,6 +10,7 @@ import mygame.piece.Piece;
 import mygame.point.Point;
 import org.junit.jupiter.api.Test;
 
+import java.util.Comparator;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -82,6 +80,26 @@ class ChessValidationTest {
         board.setInBoard(pawn, point2);
 
         List<Point> moveList = validation.moveList(bishop);
+        System.out.println("moveList = " + moveList);
+    }
+
+    @Test
+    void queenMoveList() {
+        ChessPoint point = new ChessPoint("d4");
+        Queen queen = new Queen(point, Name.TEAM_WHITE);
+        board.setInBoard(queen, point);
+
+        ChessPoint point2 = new ChessPoint("e5");
+        Pawn pawn = new Pawn(point2, Name.TEAM_WHITE);
+        board.setInBoard(pawn, point2);
+
+        List<Point> moveList = validation.moveList(queen);
+        moveList.sort((c1, c2) -> {
+            if (c1.getX() != c2.getX()) {
+                return c1.getX() - c2.getX();
+            }
+            return c1.getY() - c2.getY();
+        });
         System.out.println("moveList = " + moveList);
     }
 }
