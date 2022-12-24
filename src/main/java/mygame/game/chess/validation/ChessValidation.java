@@ -281,7 +281,51 @@ public class ChessValidation {
 
     private List<Point> moveList(Bishop bishop) {
         List<Point> moveList = new ArrayList<>();
+        int x = bishop.getPoint().getX();
+        int y = bishop.getPoint().getY();
+
+        boolean firstDirect = true;
+        boolean secondDirect = true;
+        boolean thirdDirect = true;
+        boolean fourthDirect = true;
+        boolean isContinue = true;
+        int i = 1;
+        while (isContinue) {
+            if (firstDirect) {
+                firstDirect = moveAtBishop(bishop, moveList, x + i, y + i);
+            }
+            if (secondDirect) {
+                secondDirect = moveAtBishop(bishop, moveList, x + i, y - i);
+            }
+            if (thirdDirect) {
+                thirdDirect = moveAtBishop(bishop, moveList, x - i, y + i);
+            }
+            if (fourthDirect) {
+                fourthDirect = moveAtBishop(bishop, moveList, x - i, y - i);
+            }
+
+            isContinue = firstDirect || secondDirect || thirdDirect || fourthDirect;
+            i++;
+        }
+
         return moveList;
+    }
+
+    private boolean moveAtBishop(Bishop bishop, List<Point> moveList, int x, int y) {
+        ChessPoint point = new ChessPoint(x, y);
+        if (isOutOfBoard(point)) {
+            return false;
+        }
+
+        Piece piece = chessBoard.findByPoint(point);
+        if (piece == null) {
+            moveList.add(point);
+            return true;
+        }
+        if (!piece.getTeamName().equals(bishop.getTeamName())) {
+            moveList.add(point);
+        }
+        return false;
     }
 
     private List<Point> moveList(Queen queen) {
