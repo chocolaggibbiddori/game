@@ -20,16 +20,19 @@ public class ChessTurn implements Turn {
     private String currentTeam;
     private ChessNotation notation;
 
-    public void setNotation(Piece piece, Point startPoint, Point endPoint) {
+    public ChessNotation setNotation(Piece piece, Point startPoint, Point endPoint) {
         notation.setPiece(piece);
         notation.setStartPoint(startPoint);
         notation.setEndPoint(endPoint);
+        return notation;
     }
 
     @Override
     public void turnStart() {
         count = 1;
         currentTeam = Name.TEAM_WHITE;
+        notation = new ChessNotation();
+        repository.save(0, null);
     }
 
     @Override
@@ -39,8 +42,8 @@ public class ChessTurn implements Turn {
 
     @Override
     public String getStringNotation() {
-        if (notation == null) return "";
-        return notation.getPiece() + " : " + notation.getStartPoint() + " -> " + notation.getEndPoint();
+        if (notation.getPiece() == null) return "";
+        return notation.getPiece() + " " + notation.getStartPoint() + " -> " + notation.getEndPoint();
     }
 
     @Override
@@ -57,6 +60,5 @@ public class ChessTurn implements Turn {
         repository.save(count, notation);
         addCount();
         changeTeam();
-        notation = null;
     }
 }

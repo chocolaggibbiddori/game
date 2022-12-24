@@ -24,7 +24,7 @@ public class ChessValidation {
     private final Turn chessTurn;
     private final ChessNotationRepository notationRepository;
 
-    public boolean checkStringPoint(String strPoint) {
+    public boolean isRightStringPoint(String strPoint) {
         if (strPoint.length() != 2) {
             log.error("length={}", strPoint.length());
             return false;
@@ -82,7 +82,7 @@ public class ChessValidation {
         return false;
     }
 
-    public List<Point> moveList(Piece piece) {
+    public List<ChessPoint> moveList(Piece piece) {
         if (piece == null) return null;
         if (piece instanceof Pawn) {
             return moveList((Pawn) piece);
@@ -100,8 +100,8 @@ public class ChessValidation {
         return null;
     }
 
-    private List<Point> moveList(Pawn pawn) {
-        List<Point> moveList = new ArrayList<>();
+    private List<ChessPoint> moveList(Pawn pawn) {
+        List<ChessPoint> moveList = new ArrayList<>();
         int x = pawn.getPoint().getX();
         int y = pawn.getPoint().getY();
 
@@ -111,7 +111,7 @@ public class ChessValidation {
         return moveList;
     }
 
-    private void moveForwardAtPawn(Pawn pawn, List<Point> moveList, int x, int y) {
+    private void moveForwardAtPawn(Pawn pawn, List<ChessPoint> moveList, int x, int y) {
         int front = x + pawn.getMoveDirect();
         Piece blockedPiece = chessBoard.findByPoint(front, y);
 
@@ -142,13 +142,13 @@ public class ChessValidation {
         }
     }
 
-    private void attackDiagonally(Pawn pawn, List<Point> moveList, int x, int y) {
+    private void attackDiagonally(Pawn pawn, List<ChessPoint> moveList, int x, int y) {
         int front = x + pawn.getMoveDirect();
         attackDiagonally(moveList, front, y - 1, pawn.getTeamName());
         attackDiagonally(moveList, front, y + 1, pawn.getTeamName());
     }
 
-    private void attackDiagonally(List<Point> moveList, int x, int y, String teamName) {
+    private void attackDiagonally(List<ChessPoint> moveList, int x, int y, String teamName) {
         ChessPoint point = new ChessPoint(x, y);
         if (isOutOfBoard(point)) {
             return;
@@ -166,7 +166,7 @@ public class ChessValidation {
         moveList.add(point);
     }
 
-    private void enpassant(Pawn pawn, List<Point> moveList, int x, int y) {
+    private void enpassant(Pawn pawn, List<ChessPoint> moveList, int x, int y) {
         if (chessTurn.getCount() == 1) {
             return;
         }
@@ -174,7 +174,7 @@ public class ChessValidation {
         enpassant(pawn, moveList, x, y + 1, pawn.getTeamName());
     }
 
-    private void enpassant(Pawn pawn, List<Point> moveList, int x, int y, String teamName) {
+    private void enpassant(Pawn pawn, List<ChessPoint> moveList, int x, int y, String teamName) {
         ChessPoint point = new ChessPoint(x, y);
         if (isOutOfBoard(point)) {
             return;
@@ -202,8 +202,8 @@ public class ChessValidation {
         }
     }
 
-    private List<Point> moveList(Rook rook) {
-        List<Point> moveList = new ArrayList<>();
+    private List<ChessPoint> moveList(Rook rook) {
+        List<ChessPoint> moveList = new ArrayList<>();
         int x = rook.getPoint().getX();
         int y = rook.getPoint().getY();
 
@@ -234,7 +234,7 @@ public class ChessValidation {
         return moveList;
     }
 
-    private boolean checkPointOnMoveInLine(String teamName, List<Point> moveList, int x, int y) {
+    private boolean checkPointOnMoveInLine(String teamName, List<ChessPoint> moveList, int x, int y) {
         ChessPoint point = new ChessPoint(x, y);
         if (isOutOfBoard(point)) {
             return false;
@@ -251,8 +251,8 @@ public class ChessValidation {
         return false;
     }
 
-    private List<Point> moveList(Knight knight) {
-        List<Point> moveList = new ArrayList<>();
+    private List<ChessPoint> moveList(Knight knight) {
+        List<ChessPoint> moveList = new ArrayList<>();
         int[][] checkList = {{-2, -1}, {-2, 1}, {2, -1}, {2, 1}, {-1, -2}, {1, -2}, {-1, 2}, {1, 2}};
         int x = knight.getPoint().getX();
         int y = knight.getPoint().getY();
@@ -279,8 +279,8 @@ public class ChessValidation {
         return moveList;
     }
 
-    private List<Point> moveList(Bishop bishop) {
-        List<Point> moveList = new ArrayList<>();
+    private List<ChessPoint> moveList(Bishop bishop) {
+        List<ChessPoint> moveList = new ArrayList<>();
         int x = bishop.getPoint().getX();
         int y = bishop.getPoint().getY();
 
@@ -311,8 +311,8 @@ public class ChessValidation {
         return moveList;
     }
 
-    private List<Point> moveList(Queen queen) {
-        List<Point> moveList = new ArrayList<>();
+    private List<ChessPoint> moveList(Queen queen) {
+        List<ChessPoint> moveList = new ArrayList<>();
         int x = queen.getPoint().getX();
         int y = queen.getPoint().getY();
 
@@ -359,8 +359,8 @@ public class ChessValidation {
         return moveList;
     }
 
-    private List<Point> moveList(King king) {
-        List<Point> moveList = new ArrayList<>();
+    private List<ChessPoint> moveList(King king) {
+        List<ChessPoint> moveList = new ArrayList<>();
         int[][] checkList = {{-1, -1}, {-1, 0}, {-1, 1}, {0, -1}, {0, 1}, {1, -1}, {1, 0}, {1, 1}};
         int x = king.getPoint().getX();
         int y = king.getPoint().getY();

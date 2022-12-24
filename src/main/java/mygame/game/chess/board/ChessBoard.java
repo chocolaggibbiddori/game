@@ -9,8 +9,6 @@ import mygame.piece.Piece;
 import mygame.point.Point;
 import org.springframework.stereotype.Component;
 
-import java.util.Arrays;
-
 @Slf4j
 @Component
 public class ChessBoard implements Board {
@@ -19,17 +17,6 @@ public class ChessBoard implements Board {
 
     public Piece[][] getBoard() {
         return board.clone();
-    }
-
-    @Override
-    public void init() {
-        setPawn();
-        setRook();
-        setKnight();
-        setBishop();
-        setQueen();
-        setKing();
-        log.info("Game Init");
     }
 
     @Override
@@ -46,6 +33,32 @@ public class ChessBoard implements Board {
     public Piece findByPoint(String strPoint) {
         Point point = new ChessPoint(strPoint);
         return findByPoint(point);
+    }
+
+    @Override
+    public Piece move(Piece piece, Point endPoint) {
+        int startX = piece.getPoint().getX();
+        int startY = piece.getPoint().getY();
+        int endX = endPoint.getX();
+        int endY = endPoint.getY();
+
+        Piece deadPiece = board[endX][endY];
+        board[startX][startY] = null;
+        board[endX][endY] = piece;
+        piece.setPoint(endPoint);
+
+        return deadPiece;
+    }
+
+    @Override
+    public void init() {
+        setPawn();
+        setRook();
+        setKnight();
+        setBishop();
+        setQueen();
+        setKing();
+        log.info("Game Init");
     }
 
     private void setPawn() {

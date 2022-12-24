@@ -12,4 +12,6 @@ public interface Board {
     Piece findByPoint(int x, int y);
 
     Piece findByPoint(String strPoint);
+
+    Piece move(Piece piece, Point endPoint);
 }

@@ -1,6 +1,7 @@
 package mygame.game.chess.view;
 
 import mygame.board.Board;
+import mygame.game.chess.point.ChessPoint;
 import mygame.piece.Piece;
 import mygame.point.Point;
 
@@ -38,7 +39,7 @@ public class View {
         return sb.toString();
     }
 
-    public String drawBoard(List<Point> moveList) {
+    public String drawBoard(List<ChessPoint> moveList) {
         sb = new StringBuilder();
         rowNumberIdx = 0;
         sb.append("<br>\n");
@@ -108,7 +109,7 @@ public class View {
         sb.append("<br>\n");
     }
 
-    private void drawColLineWithPieceFirstWhite(List<Point> moveList) {
+    private void drawColLineWithPieceFirstWhite(List<ChessPoint> moveList) {
         sb.append("   ");
         sb.append("<b>").append(rowNumber[rowNumberIdx]).append("</b>");
         sb.append("   ");
@@ -136,7 +137,7 @@ public class View {
         }
     }
 
-    private void drawPiece(Piece piece, List<Point> moveList, int yIdx) {
+    private void drawPiece(Piece piece, List<ChessPoint> moveList, int yIdx) {
         if (moveList.size() == 0) {
             drawPiece(piece);
             return;
@@ -161,7 +162,7 @@ public class View {
         }
     }
 
-    private boolean isContainsPoint(List<Point> moveList, int x, int y) {
+    private boolean isContainsPoint(List<ChessPoint> moveList, int x, int y) {
         for (Point point : moveList) {
             if (point.getX() == x && point.getY() == y) {
                 return true;
@@ -189,7 +190,7 @@ public class View {
         sb.append("<br>\n");
     }
 
-    private void drawColLineWithPieceFirstBlack(List<Point> moveList) {
+    private void drawColLineWithPieceFirstBlack(List<ChessPoint> moveList) {
         sb.append("   ");
         sb.append("<b>").append(rowNumber[rowNumberIdx]).append("</b>");
         sb.append("   ");

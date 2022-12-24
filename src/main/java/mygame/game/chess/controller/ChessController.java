@@ -2,11 +2,11 @@ package mygame.game.chess.controller;
 
 import lombok.extern.slf4j.Slf4j;
 import mygame.board.Board;
+import mygame.game.chess.piece.King;
 import mygame.game.chess.point.ChessPoint;
+import mygame.game.chess.turn.ChessTurn;
 import mygame.game.chess.validation.ChessValidation;
 import mygame.piece.Piece;
-import mygame.point.Point;
-import mygame.turn.Turn;
 import mygame.game.chess.view.View;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -22,12 +22,12 @@ import java.util.List;
 public class ChessController {
 
     private final Board chessBoard;
-    private final Turn chessTurn;
+    private final ChessTurn chessTurn;
     private final ChessValidation chessValidation;
     private final View view;
 
     @Autowired
-    public ChessController(Board chessBoard, Turn chessTurn, ChessValidation chessValidation) {
+    public ChessController(Board chessBoard, ChessTurn chessTurn, ChessValidation chessValidation) {
         this.chessBoard = chessBoard;
         this.chessTurn = chessTurn;
         this.chessValidation = chessValidation;
@@ -46,10 +46,19 @@ public class ChessController {
         return "chess/select";
     }
 
+    @GetMapping("/select")
+    public String select(Model model) {
+        model.addAttribute("view", view.drawBoard())
+                .addAttribute("turnCount", chessTurn.getCount())
+                .addAttribute("notation", chessTurn.getStringNotation());
+
+        return "chess/select";
+    }
+
     @PostMapping("/select")
     public String select(@RequestParam String strPoint, Model model, RedirectAttributes redirectAttributes) {
         strPoint = strPoint.trim().toLowerCase();
-        if (!chessValidation.checkStringPoint(strPoint)) {
+        if (!chessValidation.isRightStringPoint(strPoint)) {
             addAttributeWithError(model, "잘못된 입력입니다.");
             return "chess/select";
         }
@@ -71,6 +80,7 @@ public class ChessController {
     }
 
     private void addAttributeWithError(Model model, String errorMessage) {
+        log.error("errorMessage={}", errorMessage);
         model.addAttribute("view", view.drawBoard())
                 .addAttribute("error", errorMessage)
                 .addAttribute("hasError", true)
@@ -79,11 +89,10 @@ public class ChessController {
     }
 
     @GetMapping("/{point}/move")
-    public String move(@PathVariable Point point, Model model) {
+    public String showMoveList(@PathVariable ChessPoint point, Model model) {
         Piece piece = chessBoard.findByPoint(point);
-        List<Point> moveList = chessValidation.moveList(piece);
+        List<ChessPoint> moveList = chessValidation.moveList(piece);
         log.info("select={}, {}", piece, point);
-        log.info("moveList={}", moveList);
 
         model.addAttribute("view", view.drawBoard(moveList))
                 .addAttribute("turnCount", chessTurn.getCount())
@@ -91,11 +100,32 @@ public class ChessController {
         return "chess/move";
     }
 
-    @PostMapping("/{point}/move")
-    public String move(@PathVariable Point point) {
-        Piece piece = chessBoard.findByPoint(point);
-        log.info("enter move");
+    @PostMapping("/{startPoint}/move")
+    public String move(@PathVariable ChessPoint startPoint, @RequestParam ChessPoint endPoint, Model model) {
+        if (!chessValidation.isRightStringPoint(endPoint.getStrPoint())) {
+            addAttributeWithError(model, "잘못된 입력입니다.");
+            return "chess/select";
+        }
+
+        Piece piece = chessBoard.findByPoint(startPoint);
+        List<ChessPoint> moveList = chessValidation.moveList(piece);
         log.info("piece={}", piece);
-        return "chess/select";
+        log.info("moveList={}", moveList);
+        log.info("move to {}", endPoint);
+        if (!moveList.contains(endPoint)) {
+            addAttributeWithError(model, "해당 위치로 이동할 수 없습니다.");
+            return "chess/select";
+        }
+
+        Piece deadPiece = chessBoard.move(piece, endPoint);
+        if (deadPiece instanceof King) {
+            model.addAttribute("view", view.drawBoard())
+                    .addAttribute("victoryTeam", chessTurn.getCurrentTeam());
+            return "chess/victory";
+        }
+
+        chessTurn.setNotation(piece, piece.getPoint(), endPoint);
+        chessTurn.nextTurn();
+        return "redirect:/chess/select";
     }
 }

@@ -7,7 +7,6 @@ import mygame.game.chess.point.ChessPoint;
 import mygame.game.chess.repository.ChessNotationRepository;
 import mygame.game.chess.turn.ChessTurn;
 import mygame.piece.Piece;
-import mygame.point.Point;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 
@@ -39,7 +38,7 @@ class ChessValidationTest {
         Rook rook = new Rook(point2, Name.TEAM_BLACK);
         board.setInBoard(rook, point2);
 
-        List<Point> moveList = validation.moveList(pawn);
+        List<ChessPoint> moveList = validation.moveList(pawn);
         System.out.println("pawnMoveList = " + moveList);
         assertThat(moveList).contains(
                 new ChessPoint("d3"),
@@ -60,7 +59,7 @@ class ChessValidationTest {
         Pawn pawn = new Pawn(point2, Name.TEAM_BLACK);
         board.setInBoard(pawn, point2);
 
-        List<Point> moveList = validation.moveList(rook);
+        List<ChessPoint> moveList = validation.moveList(rook);
         System.out.println("rookMoveList = " + moveList);
         assertThat(moveList).contains(
                 new ChessPoint("a1"),
@@ -86,7 +85,7 @@ class ChessValidationTest {
         Pawn pawn = new Pawn(point2, Name.TEAM_BLACK);
         board.setInBoard(pawn, point2);
 
-        List<Point> moveList = validation.moveList(knight);
+        List<ChessPoint> moveList = validation.moveList(knight);
         System.out.println("knightMoveList = " + moveList);
         assertThat(moveList).contains(
                 new ChessPoint("d3"),
@@ -106,7 +105,7 @@ class ChessValidationTest {
         Pawn pawn = new Pawn(point2, Name.TEAM_BLACK);
         board.setInBoard(pawn, point2);
 
-        List<Point> moveList = validation.moveList(bishop);
+        List<ChessPoint> moveList = validation.moveList(bishop);
         System.out.println("bishopMoveList = " + moveList);
         assertThat(moveList).contains(
                 new ChessPoint("c5"),
@@ -132,7 +131,7 @@ class ChessValidationTest {
         Pawn pawn = new Pawn(point2, Name.TEAM_WHITE);
         board.setInBoard(pawn, point2);
 
-        List<Point> moveList = validation.moveList(queen);
+        List<ChessPoint> moveList = validation.moveList(queen);
         moveList.sort((c1, c2) -> {
             if (c1.getX() != c2.getX()) {
                 return c1.getX() - c2.getX();
@@ -177,7 +176,7 @@ class ChessValidationTest {
         Pawn pawn = new Pawn(point2, Name.TEAM_BLACK);
         board.setInBoard(pawn, point2);
 
-        List<Point> moveList = validation.moveList(king);
+        List<ChessPoint> moveList = validation.moveList(king);
         System.out.println("kingMoveList = " + moveList);
         assertThat(moveList).contains(
                 new ChessPoint("c5"),

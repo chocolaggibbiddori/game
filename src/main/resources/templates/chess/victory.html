@@ -9,13 +9,7 @@
     <pre th:utext="${view}">보드판</pre>
 </div>
 <div style='float:right;margin-right:200px;margin-top:200px'>
-    턴: <a th:text="${turnCount}"></a>
-    <br>
-    기보: <a th:text="${notation}"></a>
-    <form th:action th:method="post">
-        움직일 위치: <input type="text" name="endPoint"> <input type="submit"/>
-    </form>
-    <div th:if="${hasError}" th:text="${error}"></div>
+    <h2 th:text="|${victoryTeam}이 승리하였습니다!|"></h2>
 </div>
 </body>
 </html>
