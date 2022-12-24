@@ -202,7 +202,6 @@ public class ChessValidation {
         }
     }
 
-    // TODO: 2022/12/23 테스트
     private List<Point> moveList(Rook rook) {
         List<Point> moveList = new ArrayList<>();
         int x = rook.getPoint().getX();

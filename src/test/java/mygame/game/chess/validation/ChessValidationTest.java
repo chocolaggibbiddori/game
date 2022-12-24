@@ -23,7 +23,23 @@ class ChessValidationTest {
     ChessValidation validation = new ChessValidation(board, turn, repository);
 
     @Test
-    void moveList() {
+    void pawnMoveList() {
+        ChessPoint point = new ChessPoint("d2");
+        Pawn pawn = new Pawn(point, Name.TEAM_WHITE);
+        board.setInBoard(pawn, point);
+
+        pawn.setFirstMoveToFalse();
+
+        ChessPoint point2 = new ChessPoint("e3");
+        Rook rook = new Rook(point2, Name.TEAM_WHITE);
+        board.setInBoard(rook, point2);
+
+        List<Point> moveList = validation.moveList(pawn);
+        System.out.println("moveList = " + moveList);
+    }
+
+    @Test
+    void rookMoveList() {
         ChessPoint point = new ChessPoint("a1");
         Rook rook = new Rook(point, Name.TEAM_WHITE);
 
