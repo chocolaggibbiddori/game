@@ -2,6 +2,7 @@ package mygame.game.chess.validation;
 
 import mygame.game.chess.board.ChessBoard;
 import mygame.game.chess.name.Name;
+import mygame.game.chess.piece.Bishop;
 import mygame.game.chess.piece.Knight;
 import mygame.game.chess.piece.Pawn;
 import mygame.game.chess.piece.Rook;
@@ -67,6 +68,20 @@ class ChessValidationTest {
         board.setInBoard(pawn, point2);
 
         List<Point> moveList = validation.moveList(knight);
+        System.out.println("moveList = " + moveList);
+    }
+
+    @Test
+    void bishopMoveList() {
+        ChessPoint point = new ChessPoint("d4");
+        Bishop bishop = new Bishop(point, Name.TEAM_WHITE);
+        board.setInBoard(bishop, point);
+
+        ChessPoint point2 = new ChessPoint("e5");
+        Pawn pawn = new Pawn(point2, Name.TEAM_BLACK);
+        board.setInBoard(pawn, point2);
+
+        List<Point> moveList = validation.moveList(bishop);
         System.out.println("moveList = " + moveList);
     }
 }
