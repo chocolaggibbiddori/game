@@ -2,6 +2,7 @@ package mygame.game.chess.validation;
 
 import mygame.game.chess.board.ChessBoard;
 import mygame.game.chess.name.Name;
+import mygame.game.chess.piece.Knight;
 import mygame.game.chess.piece.Pawn;
 import mygame.game.chess.piece.Rook;
 import mygame.game.chess.point.ChessPoint;
@@ -53,5 +54,19 @@ class ChessValidationTest {
 
         List<Point> moveList = validation.moveList(rook);
         System.out.println(moveList);
+    }
+
+    @Test
+    void knightMoveList() {
+        ChessPoint point = new ChessPoint("e1");
+        Knight knight = new Knight(point, Name.TEAM_WHITE);
+        board.setInBoard(knight, point);
+
+        ChessPoint point2 = new ChessPoint("d3");
+        Pawn pawn = new Pawn(point2, Name.TEAM_BLACK);
+        board.setInBoard(pawn, point2);
+
+        List<Point> moveList = validation.moveList(knight);
+        System.out.println("moveList = " + moveList);
     }
 }

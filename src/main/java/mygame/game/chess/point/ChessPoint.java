@@ -13,6 +13,14 @@ public class ChessPoint extends Point {
     }
 
     @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof ChessPoint) {
+            return strPoint.equals(((ChessPoint) obj).strPoint);
+        }
+        return false;
+    }
+
+    @Override
     protected String setStrPoint(int x, int y) {
         String before = String.valueOf(8 - x);
         String after = String.valueOf((char) ('a' + y));
