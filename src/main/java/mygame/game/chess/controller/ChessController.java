@@ -2,7 +2,9 @@ package mygame.game.chess.controller;
 
 import lombok.extern.slf4j.Slf4j;
 import mygame.board.Board;
+import mygame.game.chess.piece.ChessPiece;
 import mygame.game.chess.piece.King;
+import mygame.game.chess.piece.Pawn;
 import mygame.game.chess.point.ChessPoint;
 import mygame.game.chess.turn.ChessTurn;
 import mygame.game.chess.validation.ChessValidation;
@@ -69,7 +71,7 @@ public class ChessController {
             return "chess/select";
         }
 
-        Piece piece = chessBoard.findByPoint(point);
+        ChessPiece piece = (ChessPiece) chessBoard.findByPoint(point);
         if (!chessValidation.isOurTeam(piece)) {
             addAttributeWithError(model, chessTurn.getCurrentTeam() + " Team 차례입니다.");
             return "chess/select";
@@ -90,7 +92,7 @@ public class ChessController {
 
     @GetMapping("/{point}/move")
     public String showMoveList(@PathVariable ChessPoint point, Model model) {
-        Piece piece = chessBoard.findByPoint(point);
+        ChessPiece piece = (ChessPiece) chessBoard.findByPoint(point);
         List<ChessPoint> moveList = chessValidation.moveList(piece);
         log.info("select={}, {}", piece, point);
 
@@ -107,7 +109,7 @@ public class ChessController {
             return "chess/select";
         }
 
-        Piece piece = chessBoard.findByPoint(startPoint);
+        ChessPiece piece = (ChessPiece) chessBoard.findByPoint(startPoint);
         List<ChessPoint> moveList = chessValidation.moveList(piece);
         log.info("piece={}", piece);
         log.info("moveList={}", moveList);
@@ -122,6 +124,13 @@ public class ChessController {
             model.addAttribute("view", view.drawBoard())
                     .addAttribute("victoryTeam", chessTurn.getCurrentTeam());
             return "chess/victory";
+        }
+
+        piece.addMoveCount();
+        if (piece instanceof Pawn) {
+            if (((Pawn) piece).isFirstMove()) {
+                ((Pawn) piece).setFirstMoveToFalse();
+            }
         }
 
         chessTurn.setNotation(piece, piece.getPoint(), endPoint);

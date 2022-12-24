@@ -3,8 +3,8 @@ package mygame.game.chess.turn;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import mygame.game.chess.name.Name;
+import mygame.game.chess.piece.ChessPiece;
 import mygame.game.chess.repository.ChessNotationRepository;
-import mygame.piece.Piece;
 import mygame.point.Point;
 import mygame.turn.Turn;
 import org.springframework.stereotype.Component;
@@ -20,8 +20,8 @@ public class ChessTurn implements Turn {
     private String currentTeam;
     private ChessNotation notation;
 
-    public ChessNotation setNotation(Piece piece, Point startPoint, Point endPoint) {
-        notation.setPiece(piece);
+    public ChessNotation setNotation(ChessPiece piece, Point startPoint, Point endPoint) {
+        notation.setChessPiece(piece);
         notation.setStartPoint(startPoint);
         notation.setEndPoint(endPoint);
         return notation;
@@ -42,8 +42,8 @@ public class ChessTurn implements Turn {
 
     @Override
     public String getStringNotation() {
-        if (notation.getPiece() == null) return "";
-        return notation.getPiece() + " " + notation.getStartPoint() + " -> " + notation.getEndPoint();
+        if (notation.getChessPiece() == null) return "";
+        return notation.getChessPiece() + " " + notation.getStartPoint() + " -> " + notation.getEndPoint();
     }
 
     @Override

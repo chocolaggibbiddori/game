@@ -13,38 +13,38 @@ import org.springframework.stereotype.Component;
 @Component
 public class ChessBoard implements Board {
 
-    private static final Piece[][] board = new Piece[8][8];
+    private static final ChessPiece[][] board = new ChessPiece[8][8];
 
-    public Piece[][] getBoard() {
+    public ChessPiece[][] getBoard() {
         return board.clone();
     }
 
     @Override
-    public Piece findByPoint(Point point) {
+    public ChessPiece findByPoint(Point point) {
         return board[point.getX()][point.getY()];
     }
 
     @Override
-    public Piece findByPoint(int x, int y) {
+    public ChessPiece findByPoint(int x, int y) {
         return board[x][y];
     }
 
     @Override
-    public Piece findByPoint(String strPoint) {
+    public ChessPiece findByPoint(String strPoint) {
         Point point = new ChessPoint(strPoint);
         return findByPoint(point);
     }
 
     @Override
-    public Piece move(Piece piece, Point endPoint) {
+    public ChessPiece move(Piece piece, Point endPoint) {
         int startX = piece.getPoint().getX();
         int startY = piece.getPoint().getY();
         int endX = endPoint.getX();
         int endY = endPoint.getY();
 
-        Piece deadPiece = board[endX][endY];
+        ChessPiece deadPiece = board[endX][endY];
         board[startX][startY] = null;
-        board[endX][endY] = piece;
+        board[endX][endY] = (ChessPiece) piece;
         piece.setPoint(endPoint);
 
         return deadPiece;
@@ -86,7 +86,7 @@ public class ChessBoard implements Board {
         }
     }
 
-    public void setInBoard(Piece piece, Point point) {
+    public void setInBoard(ChessPiece piece, Point point) {
         int x = point.getX();
         int y = point.getY();
         board[x][y] = piece;

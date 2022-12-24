@@ -1,13 +1,13 @@
 package mygame.game.chess.turn;
 
 import lombok.Data;
-import mygame.piece.Piece;
+import mygame.game.chess.piece.ChessPiece;
 import mygame.point.Point;
 
 @Data
 public class ChessNotation {
 
-    Piece piece;
+    ChessPiece chessPiece;
     Point startPoint;
     Point endPoint;
 }

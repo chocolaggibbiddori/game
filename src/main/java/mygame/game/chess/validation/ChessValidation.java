@@ -46,7 +46,7 @@ public class ChessValidation {
     }
 
     public boolean isNull(ChessPoint point) {
-        Piece piece = chessBoard.findByPoint(point);
+        ChessPiece piece = (ChessPiece) chessBoard.findByPoint(point);
         if (piece == null) {
             log.error("piece is null");
             return true;
@@ -54,7 +54,7 @@ public class ChessValidation {
         return false;
     }
 
-    public boolean isOurTeam(Piece piece) {
+    public boolean isOurTeam(ChessPiece piece) {
         if (!piece.getTeamName().equals(chessTurn.getCurrentTeam())) {
             log.error("not your turn");
             return false;
@@ -82,7 +82,7 @@ public class ChessValidation {
         return false;
     }
 
-    public List<ChessPoint> moveList(Piece piece) {
+    public List<ChessPoint> moveList(ChessPiece piece) {
         if (piece == null) return null;
         if (piece instanceof Pawn) {
             return moveList((Pawn) piece);
@@ -192,7 +192,7 @@ public class ChessValidation {
         }
 
         ChessNotation preNotation = notationRepository.getNotation(chessTurn.getCount() - 1);
-        if (preNotation.getPiece() != piece) {
+        if (preNotation.getChessPiece() != piece) {
             return;
         }
 
