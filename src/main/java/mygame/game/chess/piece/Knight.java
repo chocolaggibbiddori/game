@@ -1,9 +1,8 @@
 package mygame.game.chess.piece;
 
-import mygame.piece.Piece;
 import mygame.point.Point;
 
-public class Knight extends Piece {
+public class Knight extends ChessPiece {
 
     public Knight(Point point, String teamName) {
         super(point, teamName);
@@ -11,6 +10,6 @@ public class Knight extends Piece {
 
     @Override
     public String toString() {
-        return teamName.substring(0, 1) + " N";
+        return getTeamName().substring(0, 1) + " N";
     }
 }

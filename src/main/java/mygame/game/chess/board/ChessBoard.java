@@ -16,7 +16,7 @@ public class ChessBoard implements Board {
     private static final Piece[][] board = new Piece[8][8];
 
     public Piece[][] getBoard() {
-        return board;
+        return board.clone();
     }
 
     @Override
@@ -71,7 +71,7 @@ public class ChessBoard implements Board {
         }
     }
 
-    private void setInBoard(Piece piece, Point point) {
+    public void setInBoard(Piece piece, Point point) {
         int x = point.getX();
         int y = point.getY();
         board[x][y] = piece;

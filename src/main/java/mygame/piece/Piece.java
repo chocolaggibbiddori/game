@@ -4,8 +4,8 @@ import mygame.point.Point;
 
 public abstract class Piece {
 
-    protected Point point;
-    protected final String teamName;
+    private Point point;
+    private final String teamName;
 
     public Piece(Point point, String teamName) {
         this.point = point;

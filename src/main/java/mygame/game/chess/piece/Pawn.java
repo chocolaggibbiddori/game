@@ -1,14 +1,12 @@
 package mygame.game.chess.piece;
 
 import mygame.game.chess.name.Name;
-import mygame.piece.Piece;
 import mygame.point.Point;
 
-public class Pawn extends Piece {
+public class Pawn extends ChessPiece {
 
-    private final int moveDirect = teamName.equals(Name.TEAM_WHITE) ? -1 : 1;
+    private final int moveDirect = getTeamName().equals(Name.TEAM_WHITE) ? -1 : 1;
     private boolean firstMove = true;
-    private int moveCount = 0;
 
     public Pawn(Point point, String teamName) {
         super(point, teamName);
@@ -18,19 +16,11 @@ public class Pawn extends Piece {
         firstMove = false;
     }
 
-    public void addMoveCount() {
-        moveCount++;
-    }
-
     public int getMoveDirect() {
         return moveDirect;
     }
 
     public boolean isFirstMove() {
         return firstMove;
-    }
-
-    public int getMoveCount() {
-        return moveCount;
     }
 }
