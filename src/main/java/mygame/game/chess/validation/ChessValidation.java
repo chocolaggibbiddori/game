@@ -361,6 +361,29 @@ public class ChessValidation {
 
     private List<Point> moveList(King king) {
         List<Point> moveList = new ArrayList<>();
+        int[][] checkList = {{-1, -1}, {-1, 0}, {-1, 1}, {0, -1}, {0, 1}, {1, -1}, {1, 0}, {1, 1}};
+        int x = king.getPoint().getX();
+        int y = king.getPoint().getY();
+
+        for (int[] check : checkList) {
+            int checkX = x + check[0];
+            int checkY = y + check[1];
+
+            ChessPoint point = new ChessPoint(checkX, checkY);
+            if (isOutOfBoard(point)) {
+                continue;
+            }
+
+            Piece piece = chessBoard.findByPoint(point);
+            if (piece == null) {
+                moveList.add(point);
+                continue;
+            }
+            if (!piece.getTeamName().equals(king.getTeamName())) {
+                moveList.add(point);
+            }
+        }
+
         return moveList;
     }
 }
