@@ -207,27 +207,27 @@ public class ChessValidation {
         int x = rook.getPoint().getX();
         int y = rook.getPoint().getY();
 
-        boolean moveMinusX = true;
-        boolean movePlusX = true;
-        boolean moveMinusY = true;
-        boolean movePlusY = true;
+        boolean direct1 = true;
+        boolean direct2 = true;
+        boolean direct3 = true;
+        boolean direct4 = true;
         boolean isContinue = true;
         int i = 1;
         while (isContinue) {
-            if (moveMinusX) {
-                moveMinusX = moveAtRook(rook, moveList, x - i, y);
+            if (direct1) {
+                direct1 = moveAtRook(rook, moveList, x - i, y);
             }
-            if (movePlusX) {
-                movePlusX = moveAtRook(rook, moveList, x + i, y);
+            if (direct2) {
+                direct2 = moveAtRook(rook, moveList, x + i, y);
             }
-            if (moveMinusY) {
-                moveMinusY = moveAtRook(rook, moveList, x, y - i);
+            if (direct3) {
+                direct3 = moveAtRook(rook, moveList, x, y - i);
             }
-            if (movePlusY) {
-                movePlusY = moveAtRook(rook, moveList, x, y + i);
+            if (direct4) {
+                direct4 = moveAtRook(rook, moveList, x, y + i);
             }
 
-            isContinue = moveMinusX || movePlusX || moveMinusY || movePlusY;
+            isContinue = direct1 || direct2 || direct3 || direct4;
             i++;
         }
 
@@ -284,27 +284,27 @@ public class ChessValidation {
         int x = bishop.getPoint().getX();
         int y = bishop.getPoint().getY();
 
-        boolean firstDirect = true;
-        boolean secondDirect = true;
-        boolean thirdDirect = true;
-        boolean fourthDirect = true;
+        boolean direct1 = true;
+        boolean direct2 = true;
+        boolean direct3 = true;
+        boolean direct4 = true;
         boolean isContinue = true;
         int i = 1;
         while (isContinue) {
-            if (firstDirect) {
-                firstDirect = moveAtBishop(bishop, moveList, x + i, y + i);
+            if (direct1) {
+                direct1 = moveAtBishop(bishop, moveList, x + i, y + i);
             }
-            if (secondDirect) {
-                secondDirect = moveAtBishop(bishop, moveList, x + i, y - i);
+            if (direct2) {
+                direct2 = moveAtBishop(bishop, moveList, x + i, y - i);
             }
-            if (thirdDirect) {
-                thirdDirect = moveAtBishop(bishop, moveList, x - i, y + i);
+            if (direct3) {
+                direct3 = moveAtBishop(bishop, moveList, x - i, y + i);
             }
-            if (fourthDirect) {
-                fourthDirect = moveAtBishop(bishop, moveList, x - i, y - i);
+            if (direct4) {
+                direct4 = moveAtBishop(bishop, moveList, x - i, y - i);
             }
 
-            isContinue = firstDirect || secondDirect || thirdDirect || fourthDirect;
+            isContinue = direct1 || direct2 || direct3 || direct4;
             i++;
         }
 
@@ -330,7 +330,67 @@ public class ChessValidation {
 
     private List<Point> moveList(Queen queen) {
         List<Point> moveList = new ArrayList<>();
+        int x = queen.getPoint().getX();
+        int y = queen.getPoint().getY();
+
+        boolean direct1 = true;
+        boolean direct2 = true;
+        boolean direct3 = true;
+        boolean direct4 = true;
+        boolean direct5 = true;
+        boolean direct6 = true;
+        boolean direct7 = true;
+        boolean direct8 = true;
+        boolean isContinue = true;
+        int i = 1;
+        while (isContinue) {
+            if (direct1) {
+                direct1 = moveAtQueen(queen, moveList, x + i, y);
+            }
+            if (direct2) {
+                direct2 = moveAtQueen(queen, moveList, x - i, y);
+            }
+            if (direct3) {
+                direct3 = moveAtQueen(queen, moveList, x, y + i);
+            }
+            if (direct4) {
+                direct4 = moveAtQueen(queen, moveList, x, y - i);
+            }
+            if (direct5) {
+                direct5 = moveAtQueen(queen, moveList, x + i, y + i);
+            }
+            if (direct6) {
+                direct6 = moveAtQueen(queen, moveList, x + i, y - i);
+            }
+            if (direct7) {
+                direct7 = moveAtQueen(queen, moveList, x - i, y + i);
+            }
+            if (direct8) {
+                direct8 = moveAtQueen(queen, moveList, x - i, y - i);
+            }
+
+            isContinue = direct1 || direct2 || direct3 || direct4 || direct5 || direct6 || direct7 || direct8;
+            i++;
+        }
+
         return moveList;
+    }
+
+    private boolean moveAtQueen(Queen queen, List<Point> moveList, int x, int y) {
+        ChessPoint point = new ChessPoint(x, y);
+        if (isOutOfBoard(point)) {
+            return false;
+        }
+
+        Piece piece = chessBoard.findByPoint(point);
+        if (piece == null) {
+            moveList.add(point);
+            return true;
+        }
+        if (!piece.getTeamName().equals(queen.getTeamName())) {
+            moveList.add(point);
+        }
+        return false;
     }
 
     private List<Point> moveList(King king) {
