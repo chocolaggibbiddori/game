@@ -166,4 +166,28 @@ class ChessValidationTest {
                 new ChessPoint("g1")
         );
     }
+
+    @Test
+    void kingMoveList() {
+        ChessPoint point = new ChessPoint("d4");
+        King king = new King(point, Name.TEAM_WHITE);
+        board.setInBoard(king, point);
+
+        ChessPoint point2 = new ChessPoint("e5");
+        Pawn pawn = new Pawn(point2, Name.TEAM_BLACK);
+        board.setInBoard(pawn, point2);
+
+        List<Point> moveList = validation.moveList(king);
+        System.out.println("kingMoveList = " + moveList);
+        assertThat(moveList).contains(
+                new ChessPoint("c5"),
+                new ChessPoint("d5"),
+                new ChessPoint("e5"),
+                new ChessPoint("c4"),
+                new ChessPoint("e4"),
+                new ChessPoint("c3"),
+                new ChessPoint("d3"),
+                new ChessPoint("e3")
+        );
+    }
 }
