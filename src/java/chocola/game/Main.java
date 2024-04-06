@@ -1,6 +1,7 @@
 package chocola.game;
 
 import chocola.interfaces.Game;
+import chocola.interfaces.GameManager;
 
 import java.util.Optional;
 

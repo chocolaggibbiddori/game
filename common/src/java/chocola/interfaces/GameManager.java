@@ -1,17 +1,15 @@
-package chocola.game;
-
-import chocola.interfaces.Game;
+package chocola.interfaces;
 
 import java.util.Objects;
 import java.util.Optional;
 import java.util.ServiceLoader;
 
-class GameManager {
+public class GameManager {
 
     private GameManager() {
     }
 
-    static Optional<Game> findGame(String gameName) {
+    public static Optional<Game> findGame(String gameName) {
         Objects.requireNonNull(gameName, "Argument 'gameName' is null");
 
         ServiceLoader<Game> loader = ServiceLoader.load(Game.class);
