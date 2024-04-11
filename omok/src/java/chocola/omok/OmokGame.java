@@ -17,6 +17,7 @@ public class OmokGame implements Game {
         result = Result.NONE;
     }
 
+    @Override
     public void start() {
         printStartMessage();
         println(board.toString());
