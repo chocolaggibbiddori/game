@@ -1,10 +1,8 @@
 package chocola.omok;
 
-import chocola.interfaces.Point;
-
 import java.util.function.Function;
 
-class OmokConverter implements Function<String, Point> {
+class OmokConverter implements Function<String, OmokPoint> {
 
     private static final OmokConverter INSTANCE = new OmokConverter();
     private final OmokPoint[][] OMOK_POINTS;
@@ -21,7 +19,7 @@ class OmokConverter implements Function<String, Point> {
     }
 
     @Override
-    public Point apply(String input) {
+    public OmokPoint apply(String input) {
         String[] split = input.split(",");
         String s1 = split[0].trim();
         String s2 = split[1].trim();
