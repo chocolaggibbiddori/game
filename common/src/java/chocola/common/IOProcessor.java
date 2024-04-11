@@ -1,6 +1,5 @@
 package chocola.common;
 
-import chocola.interfaces.Point;
 import chocola.interfaces.Validator;
 
 import java.io.PrintStream;
@@ -26,7 +25,7 @@ public class IOProcessor  {
         throw new InvalidInputException();
     }
 
-    public static Point readLine(Validator<? super String> validator, Function<? super String, ? extends Point> mapper) throws InvalidInputException {
+    public static <T> T readLine(Validator<? super String> validator, Function<? super String, T> mapper) throws InvalidInputException {
         String line = readLine(validator);
         return mapper.apply(line);
     }
