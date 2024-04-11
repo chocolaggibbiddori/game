@@ -1,8 +1,7 @@
 package chocola.omok;
 
-import chocola.interfaces.Game;
 import chocola.common.InvalidInputException;
-import chocola.interfaces.Point;
+import chocola.interfaces.Game;
 
 import static chocola.common.IOProcessor.*;
 
@@ -36,7 +35,7 @@ public class OmokGame implements Game {
         OmokValidator validator = new OmokValidator(board);
 
         try {
-            Point point = readLine(validator, converter);
+            OmokPoint point = readLine(validator, converter);
             if (currentTeam == Team.BLACK && !validator.isValidAtBlack(point)) {
                 throw new InvalidInputException();
             }

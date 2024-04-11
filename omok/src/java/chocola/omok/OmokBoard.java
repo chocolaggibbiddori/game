@@ -1,7 +1,5 @@
 package chocola.omok;
 
-import chocola.interfaces.Point;
-
 class OmokBoard {
 
     private static final int LINE_NUMBER = 16;
@@ -24,7 +22,7 @@ class OmokBoard {
                                                     """;
 
     private final StringBuilder boardStringBuilder;
-    private Point lastPoint;
+    private OmokPoint lastPoint;
 
     OmokBoard() {
         boardStringBuilder = new StringBuilder(INIT_BOARD_STRING);
@@ -35,11 +33,11 @@ class OmokBoard {
         return boardStringBuilder.toString();
     }
 
-    Point getLastPoint() {
+    OmokPoint getLastPoint() {
         return lastPoint;
     }
 
-    char getBy(Point point) {
+    char getBy(OmokPoint point) {
         int x = point.x();
         int y = point.y();
         return getBy(x, y);
@@ -66,7 +64,7 @@ class OmokBoard {
         return getBy(x, y) == value;
     }
 
-    void placeStone(Team team, Point point) {
+    void placeStone(Team team, OmokPoint point) {
         int x = point.x();
         int y = point.y();
         int idx = getIdx(x, y);

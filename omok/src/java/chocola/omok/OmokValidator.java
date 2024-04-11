@@ -1,6 +1,5 @@
 package chocola.omok;
 
-import chocola.interfaces.Point;
 import chocola.interfaces.Validator;
 
 class OmokValidator implements Validator<String> {
@@ -41,7 +40,7 @@ class OmokValidator implements Validator<String> {
         return n >= 1 && n <= 15;
     }
 
-    boolean isValidAtBlack(Point point) {
+    boolean isValidAtBlack(OmokPoint point) {
         int _33LineNum = 0;
 
         Direction[] directions = Direction.values();
@@ -68,7 +67,7 @@ class OmokValidator implements Validator<String> {
     Result getResult() {
         if (isDraw()) return Result.DRAW;
 
-        Point lastPoint = board.getLastPoint();
+        OmokPoint lastPoint = board.getLastPoint();
         Direction[] directions = Direction.getHalfRound();
         int max = 4;
 
@@ -97,11 +96,11 @@ class OmokValidator implements Validator<String> {
         return true;
     }
 
-    private String getStraightLine(Point point, int max, Direction direction) {
+    private String getStraightLine(OmokPoint point, int max, Direction direction) {
         return getStraightLine(point, max, max, direction);
     }
 
-    private String getStraightLine(Point point, int directionMax, int oppositeDirectionMax, Direction direction) {
+    private String getStraightLine(OmokPoint point, int directionMax, int oppositeDirectionMax, Direction direction) {
         Direction oppositeDirection = direction.getOppositeDirection();
 
         String directionLine = getHalfStraightLine(point, directionMax, direction);
@@ -113,7 +112,7 @@ class OmokValidator implements Validator<String> {
                 oppositeDirectionLine + currentStone + directionLine;
     }
 
-    private String getHalfStraightLine(Point point, int max, Direction direction) {
+    private String getHalfStraightLine(OmokPoint point, int max, Direction direction) {
         StringBuilder sb = new StringBuilder(max);
         int x = point.x();
         int y = point.y();
