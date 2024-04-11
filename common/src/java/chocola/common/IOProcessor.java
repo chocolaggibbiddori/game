@@ -19,14 +19,14 @@ public class IOProcessor  {
         return SC.nextLine();
     }
 
-    public static String readLine(Validator<String> validator) throws InvalidInputException {
+    public static String readLine(Validator<? super String> validator) throws InvalidInputException {
         String line = readLine();
         if (validator.isValid(line)) return line;
 
         throw new InvalidInputException();
     }
 
-    public static Point readLine(Validator<String> validator, Function<String, Point> mapper) throws InvalidInputException {
+    public static Point readLine(Validator<? super String> validator, Function<? super String, ? extends Point> mapper) throws InvalidInputException {
         String line = readLine(validator);
         return mapper.apply(line);
     }
