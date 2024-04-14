@@ -1,8 +1,6 @@
 package chocola.interfaces;
 
-import java.util.Objects;
-import java.util.Optional;
-import java.util.ServiceLoader;
+import java.util.*;
 
 public class GameManager {
 
@@ -17,5 +15,14 @@ public class GameManager {
             if (gameName.equalsIgnoreCase(game.getName())) return Optional.of(game);
 
         return Optional.empty();
+    }
+
+    public static List<Game> getList() {
+        List<Game> result = new ArrayList<>();
+
+        ServiceLoader<Game> loader = ServiceLoader.load(Game.class);
+        for (Game game : loader) result.add(game);
+
+        return result;
     }
 }
