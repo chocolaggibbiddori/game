@@ -63,10 +63,22 @@ public class ChessGame implements Game {
             default -> throw new IllegalStateException();
         }
 
-        printNotation();
+        printNotation(result);
+    }
+
+    private void printNotation(Result result) {
+        StringBuilder notationBuilder = createNotationBuilder();
+        String resultNotation = Notation.getResultNotation(result).notate();
+        notationBuilder.append(resultNotation);
+        IOProcessor.println(notationBuilder.toString());
     }
 
     private void printNotation() {
+        StringBuilder notationBuilder = createNotationBuilder();
+        IOProcessor.println(notationBuilder.toString());
+    }
+
+    private StringBuilder createNotationBuilder() {
         StringBuilder notationSb = new StringBuilder();
         List<Notation> notationList = board.getNotationList();
 
@@ -78,7 +90,7 @@ public class ChessGame implements Game {
             notationSb.append(notationStr);
         }
 
-        IOProcessor.println(notationSb.toString());
+        return notationSb;
     }
 
     @Override
