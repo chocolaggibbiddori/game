@@ -20,10 +20,15 @@ public enum Tile {
     }
 
     public int getFileIdx() {
-        return getFile() - 'A';
+        return getFile() - 'a';
     }
 
     public int getRankIdx() {
         return getRank() - '1';
+    }
+
+    @Override
+    public String toString() {
+        return super.toString().toLowerCase();
     }
 }
