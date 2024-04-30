@@ -1,5 +1,8 @@
 package chocola.chess;
 
+import chocola.chess.command.Command;
+import chocola.chess.command.CommandFactory;
+import chocola.chess.command.CommandFactoryConfiguration;
 import chocola.common.IOProcessor;
 import chocola.interfaces.Game;
 
@@ -19,7 +22,11 @@ public class ChessGame implements Game {
         result = Result.NONE;
     }
 
-    ChessValidator getValidator() {
+    static {
+        CommandFactoryConfiguration.addFactories();
+    }
+
+    public ChessValidator getValidator() {
         return validator;
     }
 
@@ -79,36 +86,12 @@ public class ChessGame implements Game {
         return "chess";
     }
 
-    static class IllegalCommand implements Command {
-
-        private final Type type;
-
-        IllegalCommand(Type type) {
-            this.type = type;
-        }
-
-        @Override
-        public void execute() {
-            String message = switch (type) {
-                case INPUT -> "입력은 '(기물의 타일) (이동할 타일)' 형식에 맞춰 해주세요.";
-                case TILE -> "타일은 a1 ~ h8 내에서 입력해주세요.";
-                case MOVE -> "해당 칸으로는 이동할 수 없습니다.";
-            };
-
-            IOProcessor.println(message);
-        }
-
-        enum Type {
-            INPUT, TILE, MOVE
-        }
-    }
-
-    class MoveCommand implements Command {
+    public class MoveCommand implements Command {
 
         private final Tile target;
         private final Tile to;
 
-        MoveCommand(Tile target, Tile to) {
+        public MoveCommand(Tile target, Tile to) {
             this.target = target;
             this.to = to;
         }
@@ -123,7 +106,7 @@ public class ChessGame implements Game {
         }
     }
 
-    class GiveupCommand implements Command {
+    public class GiveupCommand implements Command {
 
         @Override
         public void execute() {
@@ -132,7 +115,7 @@ public class ChessGame implements Game {
         }
     }
 
-    class NotationCommand implements Command {
+    public class NotationCommand implements Command {
 
         @Override
         public void execute() {
