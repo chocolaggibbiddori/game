@@ -25,8 +25,8 @@ public class Knight extends Piece {
         return absOfDiff(pFile, tFile) + absOfDiff(pRank, tRank) == 3;
     }
 
-    private int absOfDiff(int pFile, int tFile) {
-        return Math.abs(pFile - tFile);
+    private int absOfDiff(int i1, int i2) {
+        return Math.abs(i1 - i2);
     }
 
     private boolean isNotSame(int i1, int i2) {
