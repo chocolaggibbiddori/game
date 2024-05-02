@@ -16,7 +16,11 @@ public final class Bishop extends Piece {
         int tFile = to.getFileIdx();
         int tRank = to.getRankIdx();
 
-        return Math.abs(pFile - tFile) == Math.abs(pRank - tRank);
+        return absOfDiff(pFile, tFile) == absOfDiff(pRank, tRank);
+    }
+
+    private int absOfDiff(int pFile, int tFile) {
+        return Math.abs(pFile - tFile);
     }
 
     public char getInitial() {
