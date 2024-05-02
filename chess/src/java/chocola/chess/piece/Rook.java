@@ -12,6 +12,8 @@ public final class Rook extends MoveCheckedPiece {
     @Override
     public boolean canMoveTo(Tile to) {
         Tile position = getPosition();
+        if (position == to) return false;
+
         int pFile = position.getFileIdx();
         int pRank = position.getRankIdx();
         int tFile = to.getFileIdx();
