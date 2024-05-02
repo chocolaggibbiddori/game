@@ -47,6 +47,8 @@ public final class King extends MoveCheckedPiece {
     }
 
     private boolean isCastling(Tile position, Tile to) {
+        if (isMoved()) return false;
+
         if (team == Team.WHITE) return position == Tile.E1 && (to == Tile.C1 || to == Tile.G1);
         return position == Tile.E8 && (to == Tile.C8 || to == Tile.G8);
     }
