@@ -3,7 +3,7 @@ package chocola.chess.piece;
 import chocola.chess.Team;
 import chocola.chess.Tile;
 
-public class Queen extends Piece {
+public final class Queen extends Piece {
 
     public Queen(Team team) {
         super(team);
