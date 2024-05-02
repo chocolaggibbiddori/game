@@ -37,7 +37,7 @@ public final class Knight extends Piece {
     }
 
     @Override
-    public char getInitial() {
-        return 'N';
+    public String getInitial() {
+        return "N";
     }
 }

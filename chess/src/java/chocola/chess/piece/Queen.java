@@ -35,7 +35,7 @@ public final class Queen extends Piece {
     }
 
     @Override
-    public char getInitial() {
-        return 'Q';
+    public String getInitial() {
+        return "Q";
     }
 }

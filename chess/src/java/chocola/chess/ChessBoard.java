@@ -91,8 +91,8 @@ class ChessBoard {
             Tile whitePawnTile = TileConverter.convertToTile(i, 1);
             Tile blackPawnTile = TileConverter.convertToTile(i, 6);
 
-            setPiece(board, new WhitePawn(), whitePawnTile);
-            setPiece(board, new BlackPawn(), blackPawnTile);
+            setPiece(board, new Pawn(Team.WHITE), whitePawnTile);
+            setPiece(board, new Pawn(Team.BLACK), blackPawnTile);
         }
     }
 
@@ -152,10 +152,10 @@ class ChessBoard {
             else return Notation.QUEEN_SIDE_CASTLING;
         }
 
-        char unitInitial = piece.getInitial();
+        String unitInitial = piece.getInitial();
         char assist = getAssist(piece, target, to);
         boolean capture = enemyPiece != null;
-        char promotion = getPromotion(piece, to);
+        String promotion = getPromotion(piece, to);
         AttackType attackType = getAttackType(piece);
 
         return new NormalNotation(unitInitial, assist, capture, to, promotion, attackType);
@@ -183,14 +183,14 @@ class ChessBoard {
         else return target.getFile();
     }
 
-    private char getPromotion(Piece piece, Tile to) {
+    private String getPromotion(Piece piece, Tile to) {
         Optional<Piece> pieceOpt = getPiece(to);
         if (pieceOpt.isPresent()) {
             Piece p = pieceOpt.get();
             if (piece != p) return p.getInitial();
         }
 
-        return ' ';
+        return "";
     }
 
     private AttackType getAttackType(Piece piece) {

@@ -27,7 +27,7 @@ public final class Bishop extends Piece {
     }
 
     @Override
-    public char getInitial() {
-        return 'B';
+    public String getInitial() {
+        return "B";
     }
 }

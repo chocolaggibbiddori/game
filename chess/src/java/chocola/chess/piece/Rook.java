@@ -23,7 +23,7 @@ public final class Rook extends MoveCheckedPiece {
     }
 
     @Override
-    public char getInitial() {
-        return 'R';
+    public String getInitial() {
+        return "R";
     }
 }

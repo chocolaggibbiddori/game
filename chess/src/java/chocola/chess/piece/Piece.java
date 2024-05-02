@@ -22,5 +22,5 @@ public abstract class Piece {
 
     public abstract boolean canMoveTo(Tile to);
 
-    public abstract char getInitial();
+    public abstract String getInitial();
 }

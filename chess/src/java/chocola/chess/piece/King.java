@@ -52,7 +52,7 @@ public final class King extends MoveCheckedPiece {
     }
 
     @Override
-    public char getInitial() {
-        return 'K';
+    public String getInitial() {
+        return "K";
     }
 }
