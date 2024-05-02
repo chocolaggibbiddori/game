@@ -9,6 +9,7 @@ public final class Bishop extends Piece {
         super(team);
     }
 
+    @Override
     public boolean canMoveTo(Tile to) {
         Tile position = getPosition();
         int pFile = position.getFileIdx();
@@ -23,6 +24,7 @@ public final class Bishop extends Piece {
         return Math.abs(i1 - i2);
     }
 
+    @Override
     public char getInitial() {
         return 'B';
     }

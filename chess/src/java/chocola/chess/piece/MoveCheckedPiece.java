@@ -16,6 +16,7 @@ public abstract class MoveCheckedPiece extends Piece {
         return moved;
     }
 
+    @Override
     public void moveTo(Tile to) {
         super.moveTo(to);
         moved = true;
