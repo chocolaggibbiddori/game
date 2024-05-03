@@ -104,8 +104,14 @@ class ChessBoard {
                 Tile tile = TileConverter.convertToTile(file, rank);
                 Optional<Piece> pieceOpt = getPiece(tile);
 
-                if (pieceOpt.isPresent()) sb.append(pieceOpt.get().getInitial());
-                else sb.append("1");
+                if (pieceOpt.isPresent()) {
+                    Piece piece = pieceOpt.get();
+
+                    if (piece instanceof Pawn) sb.append(piece.team == Team.WHITE ? "P" : "p");
+                    else sb.append(piece.team == Team.WHITE ? piece.getInitial() : piece.getInitial().toLowerCase());
+                } else {
+                    sb.append("1");
+                }
             }
 
             sb.append("\n");
