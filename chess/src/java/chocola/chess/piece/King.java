@@ -9,6 +9,10 @@ public final class King extends MoveCheckedPiece {
         super(team);
     }
 
+    private King(Team team, Tile position, boolean moved) {
+        super(team, position, moved);
+    }
+
     @Override
     public boolean canMoveTo(Tile to) {
         Tile position = getPosition();
@@ -56,5 +60,10 @@ public final class King extends MoveCheckedPiece {
     @Override
     public String getInitial() {
         return "K";
+    }
+
+    @Override
+    public King copy() {
+        return new King(team, getPosition(), isMoved());
     }
 }

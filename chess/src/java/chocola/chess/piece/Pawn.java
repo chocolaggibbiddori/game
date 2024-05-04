@@ -12,7 +12,16 @@ public final class Pawn extends MoveCheckedPiece {
 
     public Pawn(Team team) {
         super(team);
-        this.moveDirect = team == Team.WHITE ? WHITE_PAWN_MOVE_DIRECT : BLACK_PAWN_MOVE_DIRECT;
+        this.moveDirect = moveDirectInit();
+    }
+
+    private Pawn(Team team, Tile position, boolean moved) {
+        super(team, position, moved);
+        this.moveDirect = moveDirectInit();
+    }
+
+    private int moveDirectInit() {
+        return team == Team.WHITE ? WHITE_PAWN_MOVE_DIRECT : BLACK_PAWN_MOVE_DIRECT;
     }
 
     @Override
@@ -61,5 +70,10 @@ public final class Pawn extends MoveCheckedPiece {
     @Override
     public String getInitial() {
         return "";
+    }
+
+    @Override
+    public Pawn copy() {
+        return new Pawn(team, getPosition(), isMoved());
     }
 }

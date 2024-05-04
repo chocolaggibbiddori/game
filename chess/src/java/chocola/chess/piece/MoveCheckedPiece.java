@@ -12,6 +12,11 @@ public abstract class MoveCheckedPiece extends Piece {
         this.moved = false;
     }
 
+    protected MoveCheckedPiece(Team team, Tile position, boolean moved) {
+        super(team, position);
+        this.moved = moved;
+    }
+
     public final boolean isMoved() {
         return moved;
     }
@@ -21,4 +26,6 @@ public abstract class MoveCheckedPiece extends Piece {
         super.moveTo(to);
         moved = true;
     }
+
+    public abstract MoveCheckedPiece copy();
 }

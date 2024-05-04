@@ -9,6 +9,10 @@ public final class Rook extends MoveCheckedPiece {
         super(team);
     }
 
+    private Rook(Team team, Tile position, boolean moved) {
+        super(team, position, moved);
+    }
+
     @Override
     public boolean canMoveTo(Tile to) {
         Tile position = getPosition();
@@ -25,5 +29,10 @@ public final class Rook extends MoveCheckedPiece {
     @Override
     public String getInitial() {
         return "R";
+    }
+
+    @Override
+    public Rook copy() {
+        return new Rook(team, getPosition(), isMoved());
     }
 }

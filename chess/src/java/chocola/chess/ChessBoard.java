@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Stream;
 
-class ChessBoard {
+class ChessBoard implements Copyable<ChessBoard> {
 
     static final int FILE_NUM = 8;
     static final int RANK_NUM = 8;
@@ -234,5 +234,23 @@ class ChessBoard {
 
     List<Notation> getNotationList() {
         return List.copyOf(notationList);
+    }
+
+    @Override
+    public ChessBoard copy() {
+        ChessBoard clone = new ChessBoard();
+
+        for (int file = 0; file < clone.board.length; file++) {
+            for (int rank = 0; rank < clone.board[file].length; rank++) {
+                Piece piece = this.board[file][rank];
+
+                if (piece == null) clone.board[file][rank] = null;
+                else clone.board[file][rank] = piece.copy();
+            }
+        }
+
+        clone.notationList.addAll(this.notationList);
+
+        return clone;
     }
 }

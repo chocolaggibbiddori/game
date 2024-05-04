@@ -9,6 +9,10 @@ public final class Queen extends Piece {
         super(team);
     }
 
+    private Queen(Team team, Tile position) {
+        super(team, position);
+    }
+
     @Override
     public boolean canMoveTo(Tile to) {
         Tile position = getPosition();
@@ -37,5 +41,10 @@ public final class Queen extends Piece {
     @Override
     public String getInitial() {
         return "Q";
+    }
+
+    @Override
+    public Queen copy() {
+        return new Queen(team, getPosition());
     }
 }

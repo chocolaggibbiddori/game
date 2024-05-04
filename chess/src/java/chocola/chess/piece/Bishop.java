@@ -9,6 +9,10 @@ public final class Bishop extends Piece {
         super(team);
     }
 
+    private Bishop(Team team, Tile position) {
+        super(team, position);
+    }
+
     @Override
     public boolean canMoveTo(Tile to) {
         Tile position = getPosition();
@@ -29,5 +33,10 @@ public final class Bishop extends Piece {
     @Override
     public String getInitial() {
         return "B";
+    }
+
+    @Override
+    public Bishop copy() {
+        return new Bishop(team, getPosition());
     }
 }
