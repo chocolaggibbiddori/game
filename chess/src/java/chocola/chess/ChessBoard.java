@@ -2,23 +2,22 @@ package chocola.chess;
 
 import chocola.chess.piece.*;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Stream;
 
-class ChessBoard implements Copyable<ChessBoard> {
+public class ChessBoard implements Copyable<ChessBoard> {
 
     static final int FILE_NUM = 8;
     static final int RANK_NUM = 8;
 
     private final Piece[][] board;
     private final List<Notation> notationList;
+    private final ChessValidator validator;
 
     ChessBoard() {
         board = boardInit();
         notationList = new ArrayList<>();
+        validator = new ChessValidator();
     }
 
     private Piece[][] boardInit() {
@@ -173,8 +172,6 @@ class ChessBoard implements Copyable<ChessBoard> {
     }
 
     private char getAssist(Piece piece, Tile target, Tile to) {
-        final ChessValidator validator = new ChessValidator(this);
-
         Optional<Piece> anotherOpt = getBoardStream()
                 .filter(p -> p.getClass().equals(piece.getClass()))
                 .filter(p -> p.team == piece.team)
@@ -200,10 +197,9 @@ class ChessBoard implements Copyable<ChessBoard> {
     }
 
     private AttackType getAttackType(Piece piece) {
-        final ChessValidator validator = new ChessValidator(this);
-
         if (validator.isCheckmate(piece.team)) return AttackType.CHECKMATE;
         if (validator.isCheck(piece.team)) return AttackType.CHECK;
+
         return AttackType.NONE;
     }
 
@@ -240,8 +236,8 @@ class ChessBoard implements Copyable<ChessBoard> {
     public ChessBoard copy() {
         ChessBoard clone = new ChessBoard();
 
-        for (int file = 0; file < clone.board.length; file++) {
-            for (int rank = 0; rank < clone.board[file].length; rank++) {
+        for (int file = 0; file < FILE_NUM; file++) {
+            for (int rank = 0; rank < RANK_NUM; rank++) {
                 Piece piece = this.board[file][rank];
 
                 if (piece == null) clone.board[file][rank] = null;
@@ -252,5 +248,115 @@ class ChessBoard implements Copyable<ChessBoard> {
         clone.notationList.addAll(this.notationList);
 
         return clone;
+    }
+
+    public ChessValidator getValidator() {
+        return validator;
+    }
+
+    public class ChessValidator {
+
+        private static final Map<Class<? extends Piece>, Validator> VALIDATOR_MAP = validatorMapInit();
+
+        private ChessValidator() {
+        }
+
+        private static Map<Class<? extends Piece>, Validator> validatorMapInit() {
+            Map<Class<? extends Piece>, Validator> map = new HashMap<>();
+
+            map.put(King.class, new KingValidator());
+            map.put(Queen.class, new QueenValidator());
+            map.put(Rook.class, new RookValidator());
+            map.put(Knight.class, new KnightValidator());
+            map.put(Bishop.class, new BishopValidator());
+            map.put(Pawn.class, new PawnValidator());
+
+            return map;
+        }
+
+        public boolean isValid(Tile target, Tile to) {
+            Optional<Piece> targetPieceOpt = getPiece(target);
+            if (targetPieceOpt.isEmpty()) return false;
+
+            Piece targetPiece = targetPieceOpt.get();
+            if (!targetPiece.canMoveTo(to)) return false;
+
+            Optional<Piece> toPieceOpt = getPiece(to);
+            if (toPieceOpt.isPresent()) {
+                Piece toPiece = toPieceOpt.get();
+
+                if (targetPiece.team == toPiece.team) return false;
+            }
+
+            ChessBoard chessBoard = ChessBoard.this;
+            if (isChecked(chessBoard, targetPiece, to)) return false;
+
+            Class<? extends Piece> pieceClass = targetPiece.getClass();
+            Validator validator = VALIDATOR_MAP.get(pieceClass);
+            return validator.isValid(chessBoard.copy(), targetPiece, to);
+        }
+
+        Result getResult(Team attackTeam) {
+            if (isCheckmate(Team.WHITE)) return Result.BLACK_WIN;
+            if (isCheckmate(Team.BLACK)) return Result.WHITE_WIN;
+            if (isStalemate(attackTeam)) return Result.DRAW;
+
+            return Result.NONE;
+        }
+
+        boolean isCheck(Team attackTeam) {
+            Tile enemyKingPosition = getEnemyKingPosition(attackTeam);
+
+            return getBoardStream()
+                    .filter(p -> p.team == attackTeam)
+                    .anyMatch(p -> {
+                        if (p instanceof Pawn pawn) return pawn.canAttackTo(enemyKingPosition);
+                        return isValid(p.getPosition(), enemyKingPosition);
+                    });
+        }
+
+        private Tile getEnemyKingPosition(Team attackTeam) {
+            Optional<Piece> enemyKingOpt = getBoardStream()
+                    .filter(p -> p.team != attackTeam)
+                    .filter(p -> p instanceof King)
+                    .findFirst();
+
+            if (enemyKingOpt.isEmpty()) throw new IllegalStateException();
+            Piece enemyKing = enemyKingOpt.get();
+
+            return enemyKing.getPosition();
+        }
+
+        boolean isCheckmate(Team attackTeam) {
+            return isCheck(attackTeam) &&
+                   cannotMove(attackTeam);
+        }
+
+        boolean isStalemate(Team attackTeam) {
+            return !isCheck(attackTeam) &&
+                   cannotMove(attackTeam);
+        }
+
+        private boolean cannotMove(Team attackTeam) {
+            return getBoardStream()
+                    .filter(p -> p.team != attackTeam)
+                    .noneMatch(p -> {
+                        Set<Tile> moveableTileSet = p.getMoveableTileSet();
+
+                        for (Tile tile : moveableTileSet)
+                            if (isValid(p.getPosition(), tile))
+                                return true;
+
+                        return false;
+                    });
+        }
+
+        static boolean isChecked(ChessBoard chessBoard, Piece piece, Tile to) {
+            chessBoard = chessBoard.copy();
+            chessBoard.setPiece(piece, to);
+
+            ChessValidator validator = chessBoard.getValidator();
+            return validator.isCheck(Team.getEnemyTeam(piece.team));
+        }
     }
 }

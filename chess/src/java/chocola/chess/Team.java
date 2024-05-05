@@ -13,5 +13,9 @@ public enum Team {
         public String toString() {
             return "흑";
         }
+    };
+
+    public static Team getEnemyTeam(Team team) {
+        return team == WHITE ? BLACK : WHITE;
     }
 }

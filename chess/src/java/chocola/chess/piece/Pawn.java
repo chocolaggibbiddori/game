@@ -24,6 +24,18 @@ public final class Pawn extends MoveCheckedPiece {
         return team == Team.WHITE ? WHITE_PAWN_MOVE_DIRECT : BLACK_PAWN_MOVE_DIRECT;
     }
 
+    public boolean canAttackTo(Tile to) {
+        Tile position = getPosition();
+        if (position == to) return false;
+
+        int pFile = position.getFileIdx();
+        int pRank = position.getRankIdx();
+        int tFile = to.getFileIdx();
+        int tRank = to.getRankIdx();
+
+        return isAttack(pFile, pRank, tFile, tRank);
+    }
+
     @Override
     public boolean canMoveTo(Tile to) {
         Tile position = getPosition();

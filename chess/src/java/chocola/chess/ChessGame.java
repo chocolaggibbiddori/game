@@ -111,8 +111,8 @@ public class ChessGame implements Game {
             board.move(target, to);
             IOProcessor.println(board.toString());
 
+            result = getValidator().getResult(currentTeam);
             currentTeam = currentTeam == Team.WHITE ? Team.BLACK : Team.WHITE;
-            result = getValidator().getResult();
         }
     }
 
