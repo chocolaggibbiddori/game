@@ -1,7 +1,7 @@
 package chocola.chess.command;
 
+import chocola.chess.ChessBoard.ChessValidator;
 import chocola.chess.ChessGame;
-import chocola.chess.ChessValidator;
 import chocola.chess.Tile;
 
 class MoveCommandFactory extends CommandFactory {

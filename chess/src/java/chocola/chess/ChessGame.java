@@ -11,13 +11,11 @@ import java.util.List;
 public class ChessGame implements Game {
 
     private final ChessBoard board;
-    private final ChessValidator validator;
     private Team currentTeam;
     private Result result;
 
     public ChessGame() {
         board = new ChessBoard();
-        validator = new ChessValidator(board);
         currentTeam = Team.WHITE;
         result = Result.NONE;
     }
@@ -26,8 +24,8 @@ public class ChessGame implements Game {
         CommandFactoryConfiguration.addFactories();
     }
 
-    public ChessValidator getValidator() {
-        return validator;
+    public ChessBoard.ChessValidator getValidator() {
+        return board.getValidator();
     }
 
     @Override
@@ -114,7 +112,7 @@ public class ChessGame implements Game {
             IOProcessor.println(board.toString());
 
             currentTeam = currentTeam == Team.WHITE ? Team.BLACK : Team.WHITE;
-            result = validator.getResult();
+            result = getValidator().getResult();
         }
     }
 
