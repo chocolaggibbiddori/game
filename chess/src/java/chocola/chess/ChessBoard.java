@@ -335,7 +335,7 @@ public class ChessBoard implements Copyable<ChessBoard> {
             Validator validator = VALIDATOR_MAP.get(pieceClass);
             if (!validator.isValid(chessBoard.copy(), targetPiece, to)) return false;
 
-            return isChecked(chessBoard, targetPiece, to);
+            return !isChecked(chessBoard, target, to);
         }
 
         Result getResult(Team attackTeam) {
@@ -393,9 +393,11 @@ public class ChessBoard implements Copyable<ChessBoard> {
                     });
         }
 
-        static boolean isChecked(ChessBoard chessBoard, Piece piece, Tile to) {
+        static boolean isChecked(ChessBoard chessBoard, Tile target, Tile to) {
             chessBoard = chessBoard.copy();
-            chessBoard.setPiece(piece, to);
+            Piece piece = chessBoard.getPiece(target).orElseThrow();
+
+            chessBoard.movePiece(piece, to);
 
             ChessValidator validator = chessBoard.getValidator();
             return validator.isCheck(Team.getEnemyTeam(piece.team));

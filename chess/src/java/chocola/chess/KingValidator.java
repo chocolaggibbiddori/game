@@ -21,21 +21,21 @@ class KingValidator implements Validator {
         Tile position = king.getPosition();
         if (king.team == Team.WHITE) {
             if (position != Tile.E1) return false;
-            if (ChessValidator.isChecked(chessBoard, king, Tile.E1)) return false;
+            if (ChessValidator.isChecked(chessBoard, position, Tile.E1)) return false;
             if (to != Tile.C1 && to != Tile.G1) return false;
             if (to == Tile.C1) {
-                if (ChessValidator.isChecked(chessBoard, king, Tile.D1)) return false;
+                if (ChessValidator.isChecked(chessBoard, position, Tile.D1)) return false;
             } else {
-                if (ChessValidator.isChecked(chessBoard, king, Tile.F1)) return false;
+                if (ChessValidator.isChecked(chessBoard, position, Tile.F1)) return false;
             }
         } else {
             if (position != Tile.E8) return false;
-            if (ChessValidator.isChecked(chessBoard, king, Tile.E8)) return false;
+            if (ChessValidator.isChecked(chessBoard, position, Tile.E8)) return false;
             if (to != Tile.C8 && to != Tile.G8) return false;
             if (to == Tile.C8) {
-                if (ChessValidator.isChecked(chessBoard, king, Tile.D8)) return false;
+                if (ChessValidator.isChecked(chessBoard, position, Tile.D8)) return false;
             } else {
-                if (ChessValidator.isChecked(chessBoard, king, Tile.F8)) return false;
+                if (ChessValidator.isChecked(chessBoard, position, Tile.F8)) return false;
             }
         }
 
