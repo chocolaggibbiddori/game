@@ -255,6 +255,16 @@ public class ChessBoard implements Copyable<ChessBoard> {
 
         piece.moveTo(tile);
         board[file][rank] = piece;
+
+        if (isCastling(piece, position, tile)) moveRookAtCastling(board, tile);
+    }
+
+    private void moveRookAtCastling(Piece[][] board, Tile kingTile) {
+        Tile rookTile = kingTile == Tile.C1 ? Tile.A1 : kingTile == Tile.G1 ? Tile.H1 : kingTile == Tile.C8 ? Tile.A8 : Tile.H8;
+        Tile rookMoveTile = kingTile == Tile.C1 ? Tile.D1 : kingTile == Tile.G1 ? Tile.F1 : kingTile == Tile.C8 ? Tile.D8 : Tile.F8;
+
+        Piece rook = board[rookTile.getFileIdx()][rookTile.getRankIdx()];
+        movePiece(board, rook, rookMoveTile);
     }
 
     private void setTileEmpty(Piece[][] board, Tile tile) {
