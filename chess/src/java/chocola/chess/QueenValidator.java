@@ -7,6 +7,6 @@ class QueenValidator extends StraightPieceValidator {
 
     @Override
     void checkType(Piece piece) {
-        if (piece instanceof Queen) throw new IllegalArgumentException();
+        if (!(piece instanceof Queen)) throw new IllegalArgumentException();
     }
 }
