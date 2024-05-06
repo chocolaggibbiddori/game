@@ -84,7 +84,7 @@ public class ChessGame implements Game {
             Notation whiteNotation = notationList.get(i);
             Notation blackNotation = (i + 1 < notationList.size()) ? notationList.get(i + 1) : Notation.EMPTY;
 
-            String notationStr = "%d. %s\t%s\n".formatted(num, whiteNotation, blackNotation);
+            String notationStr = "%d. %s\t%s\n".formatted(num, whiteNotation.notate(), blackNotation.notate());
             notationSb.append(notationStr);
         }
 
