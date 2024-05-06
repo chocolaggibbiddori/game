@@ -5,8 +5,8 @@ import chocola.chess.Tile;
 
 public final class King extends MoveCheckedPiece {
 
-    public King(Team team) {
-        super(team);
+    public King(Team team, Tile position) {
+        this(team, position, false);
     }
 
     private King(Team team, Tile position, boolean moved) {

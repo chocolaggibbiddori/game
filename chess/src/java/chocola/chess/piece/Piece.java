@@ -13,10 +13,6 @@ public abstract class Piece implements Copyable<Piece> {
     public final Team team;
     private Tile position;
 
-    public Piece(Team team) {
-        this.team = team;
-    }
-
     protected Piece(Team team, Tile position) {
         this.team = team;
         this.position = position;

@@ -7,11 +7,6 @@ public abstract class MoveCheckedPiece extends Piece {
 
     private boolean moved;
 
-    public MoveCheckedPiece(Team team) {
-        super(team);
-        this.moved = false;
-    }
-
     protected MoveCheckedPiece(Team team, Tile position, boolean moved) {
         super(team, position);
         this.moved = moved;

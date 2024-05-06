@@ -5,11 +5,7 @@ import chocola.chess.Tile;
 
 public final class Bishop extends Piece {
 
-    public Bishop(Team team) {
-        super(team);
-    }
-
-    private Bishop(Team team, Tile position) {
+    public Bishop(Team team, Tile position) {
         super(team, position);
     }
 

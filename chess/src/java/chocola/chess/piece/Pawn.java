@@ -10,9 +10,8 @@ public final class Pawn extends MoveCheckedPiece {
 
     private final int moveDirect;
 
-    public Pawn(Team team) {
-        super(team);
-        this.moveDirect = moveDirectInit();
+    public Pawn(Team team, Tile position) {
+        this(team, position, false);
     }
 
     private Pawn(Team team, Tile position, boolean moved) {

@@ -5,11 +5,11 @@ import chocola.chess.Tile;
 
 public final class Rook extends MoveCheckedPiece {
 
-    public Rook(Team team) {
-        super(team);
+    public Rook(Team team, Tile position) {
+        this(team, position, false);
     }
 
-    private Rook(Team team, Tile position, boolean moved) {
+    public Rook(Team team, Tile position, boolean moved) {
         super(team, position, moved);
     }
 

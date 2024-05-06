@@ -5,11 +5,7 @@ import chocola.chess.Tile;
 
 public final class Knight extends Piece {
 
-    public Knight(Team team) {
-        super(team);
-    }
-
-    private Knight(Team team, Tile position) {
+    public Knight(Team team, Tile position) {
         super(team, position);
     }
 

@@ -34,64 +34,88 @@ public class ChessBoard implements Copyable<ChessBoard> {
     }
 
     private void kingInit(Piece[][] board) {
-        King whiteKing = new King(Team.WHITE);
-        King blackKing = new King(Team.BLACK);
+        Tile whiteKingPosition = Tile.E1;
+        Tile blackKingPosition = Tile.E8;
+        King whiteKing = new King(Team.WHITE, whiteKingPosition);
+        King blackKing = new King(Team.BLACK, blackKingPosition);
 
-        setPiece(board, whiteKing, Tile.E1);
-        setPiece(board, blackKing, Tile.E8);
+        setPiece(board, whiteKing, whiteKingPosition);
+        setPiece(board, blackKing, blackKingPosition);
     }
 
     private void queenInit(Piece[][] board) {
-        Queen whiteQueen = new Queen(Team.WHITE);
-        Queen blackQueen = new Queen(Team.BLACK);
+        Tile whiteQueenPosition = Tile.D1;
+        Tile blackQueenPosition = Tile.D8;
+        Queen whiteQueen = new Queen(Team.WHITE, whiteQueenPosition);
+        Queen blackQueen = new Queen(Team.BLACK, blackQueenPosition);
 
-        setPiece(board, whiteQueen, Tile.D1);
-        setPiece(board, blackQueen, Tile.D8);
+        setPiece(board, whiteQueen, whiteQueenPosition);
+        setPiece(board, blackQueen, blackQueenPosition);
     }
 
     private void rookInit(Piece[][] board) {
-        Rook whiteLeftRook = new Rook(Team.WHITE);
-        Rook whiteRightRook = new Rook(Team.WHITE);
-        Rook blackLeftRook = new Rook(Team.BLACK);
-        Rook blackRightRook = new Rook(Team.BLACK);
+        Team whiteTeam = Team.WHITE;
+        Team blackTeam = Team.BLACK;
+        Tile whiteLeftRookPosition = Tile.A1;
+        Tile whiteRightRookPosition = Tile.H1;
+        Tile blackLeftRookPosition = Tile.A8;
+        Tile blackRightRookPosition = Tile.H8;
+        Rook whiteLeftRook = new Rook(whiteTeam, whiteLeftRookPosition);
+        Rook whiteRightRook = new Rook(whiteTeam, whiteRightRookPosition);
+        Rook blackLeftRook = new Rook(blackTeam, blackLeftRookPosition);
+        Rook blackRightRook = new Rook(blackTeam, blackRightRookPosition);
 
-        setPiece(board, whiteLeftRook, Tile.A1);
-        setPiece(board, whiteRightRook, Tile.H1);
-        setPiece(board, blackLeftRook, Tile.A8);
-        setPiece(board, blackRightRook, Tile.H8);
+        setPiece(board, whiteLeftRook, whiteLeftRookPosition);
+        setPiece(board, whiteRightRook, whiteRightRookPosition);
+        setPiece(board, blackLeftRook, blackLeftRookPosition);
+        setPiece(board, blackRightRook, blackRightRookPosition);
     }
 
     private void knightInit(Piece[][] board) {
-        Knight whiteLeftKnight = new Knight(Team.WHITE);
-        Knight whiteRightKnight = new Knight(Team.WHITE);
-        Knight blackLeftKnight = new Knight(Team.BLACK);
-        Knight blackRightKnight = new Knight(Team.BLACK);
+        Team whiteTeam = Team.WHITE;
+        Team blackTeam = Team.BLACK;
+        Tile whiteLeftKnightPosition = Tile.B1;
+        Tile whiteRightKnightPosition = Tile.G1;
+        Tile blackLeftKnightPosition = Tile.B8;
+        Tile blackRightKnightPosition = Tile.G8;
+        Knight whiteLeftKnight = new Knight(whiteTeam, whiteLeftKnightPosition);
+        Knight whiteRightKnight = new Knight(whiteTeam, whiteRightKnightPosition);
+        Knight blackLeftKnight = new Knight(blackTeam, blackLeftKnightPosition);
+        Knight blackRightKnight = new Knight(blackTeam, blackRightKnightPosition);
 
-        setPiece(board, whiteLeftKnight, Tile.B1);
-        setPiece(board, whiteRightKnight, Tile.G1);
-        setPiece(board, blackLeftKnight, Tile.B8);
-        setPiece(board, blackRightKnight, Tile.G8);
+        setPiece(board, whiteLeftKnight, whiteLeftKnightPosition);
+        setPiece(board, whiteRightKnight, whiteRightKnightPosition);
+        setPiece(board, blackLeftKnight, blackLeftKnightPosition);
+        setPiece(board, blackRightKnight, blackRightKnightPosition);
     }
 
     private void bishopInit(Piece[][] board) {
-        Bishop whiteLeftBishop = new Bishop(Team.WHITE);
-        Bishop whiteRightBishop = new Bishop(Team.WHITE);
-        Bishop blackLeftBishop = new Bishop(Team.BLACK);
-        Bishop blackRightBishop = new Bishop(Team.BLACK);
+        Team whiteTeam = Team.WHITE;
+        Team blackTeam = Team.BLACK;
+        Tile whiteLeftBishopPosition = Tile.C1;
+        Tile whiteRightBishopPosition = Tile.F1;
+        Tile blackLeftBishopPosition = Tile.C8;
+        Tile blackRightBishopPosition = Tile.F8;
+        Bishop whiteLeftBishop = new Bishop(whiteTeam, whiteLeftBishopPosition);
+        Bishop whiteRightBishop = new Bishop(whiteTeam, whiteRightBishopPosition);
+        Bishop blackLeftBishop = new Bishop(blackTeam, blackLeftBishopPosition);
+        Bishop blackRightBishop = new Bishop(blackTeam, blackRightBishopPosition);
 
-        setPiece(board, whiteLeftBishop, Tile.C1);
-        setPiece(board, whiteRightBishop, Tile.F1);
-        setPiece(board, blackLeftBishop, Tile.C8);
-        setPiece(board, blackRightBishop, Tile.F8);
+        setPiece(board, whiteLeftBishop, whiteLeftBishopPosition);
+        setPiece(board, whiteRightBishop, whiteRightBishopPosition);
+        setPiece(board, blackLeftBishop, blackLeftBishopPosition);
+        setPiece(board, blackRightBishop, blackRightBishopPosition);
     }
 
     private void pawnInit(Piece[][] board) {
-        for (int i = 0; i < FILE_NUM; i++) {
-            Tile whitePawnTile = TileConverter.convertToTile(i, 1);
-            Tile blackPawnTile = TileConverter.convertToTile(i, 6);
+        for (int file = 0; file < FILE_NUM; file++) {
+            Tile whitePawnTile = TileConverter.convertToTile(file, 1);
+            Tile blackPawnTile = TileConverter.convertToTile(file, 6);
+            Pawn whitePawn = new Pawn(Team.WHITE, whitePawnTile);
+            Pawn blackPawn = new Pawn(Team.BLACK, blackPawnTile);
 
-            setPiece(board, new Pawn(Team.WHITE), whitePawnTile);
-            setPiece(board, new Pawn(Team.BLACK), blackPawnTile);
+            setPiece(board, whitePawn, whitePawnTile);
+            setPiece(board, blackPawn, blackPawnTile);
         }
     }
 
@@ -142,7 +166,7 @@ public class ChessBoard implements Copyable<ChessBoard> {
 
     private Optional<Piece> move(Piece piece, Tile to) {
         Optional<Piece> enemyPieceOpt = getPiece(to);
-        setPiece(piece, to);
+        movePiece(piece, to);
         return enemyPieceOpt;
     }
 
@@ -209,16 +233,33 @@ public class ChessBoard implements Copyable<ChessBoard> {
                 .filter(Objects::nonNull);
     }
 
-    private void setPiece(Piece piece, Tile tile) {
-        setPiece(board, piece, tile);
+    private void setPiece(Piece[][] board, Piece piece, Tile tile) {
+        int file = tile.getFileIdx();
+        int rank = tile.getRankIdx();
+
+        board[file][rank] = piece;
     }
 
-    private void setPiece(Piece[][] board, Piece piece, Tile tile) {
+    private void movePiece(Piece piece, Tile tile) {
+        movePiece(board, piece, tile);
+    }
+
+    private void movePiece(Piece[][] board, Piece piece, Tile tile) {
+        Tile position = piece.getPosition();
+        setTileEmpty(board, position);
+
         int file = tile.getFileIdx();
         int rank = tile.getRankIdx();
 
         piece.moveTo(tile);
         board[file][rank] = piece;
+    }
+
+    private void setTileEmpty(Piece[][] board, Tile tile) {
+        int pTile = tile.getFileIdx();
+        int pRank = tile.getRankIdx();
+
+        board[pTile][pRank] = null;
     }
 
     Optional<Piece> getPiece(Tile tile) {
