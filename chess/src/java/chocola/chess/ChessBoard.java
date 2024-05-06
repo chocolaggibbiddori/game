@@ -289,11 +289,11 @@ public class ChessBoard implements Copyable<ChessBoard> {
             }
 
             ChessBoard chessBoard = ChessBoard.this;
-            if (isChecked(chessBoard, targetPiece, to)) return false;
-
             Class<? extends Piece> pieceClass = targetPiece.getClass();
             Validator validator = VALIDATOR_MAP.get(pieceClass);
-            return validator.isValid(chessBoard.copy(), targetPiece, to);
+            if (!validator.isValid(chessBoard.copy(), targetPiece, to)) return false;
+
+            return isChecked(chessBoard, targetPiece, to);
         }
 
         Result getResult(Team attackTeam) {
