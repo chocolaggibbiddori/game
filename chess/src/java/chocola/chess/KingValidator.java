@@ -18,28 +18,33 @@ class KingValidator implements Validator {
     private boolean canCastling(ChessBoard chessBoard, King king, Tile to) {
         if (king.isMoved()) return false;
 
-        Tile position = king.getPosition();
+        Tile kingPosition = king.getPosition();
+        Tile rookPosition;
         if (king.team == Team.WHITE) {
-            if (position != Tile.E1) return false;
-            if (ChessValidator.isChecked(chessBoard, position, Tile.E1)) return false;
+            if (kingPosition != Tile.E1) return false;
+            if (ChessValidator.isChecked(chessBoard, kingPosition, Tile.E1)) return false;
             if (to != Tile.C1 && to != Tile.G1) return false;
             if (to == Tile.C1) {
-                if (ChessValidator.isChecked(chessBoard, position, Tile.D1)) return false;
+                if (ChessValidator.isChecked(chessBoard, kingPosition, Tile.D1)) return false;
+                rookPosition = Tile.A1;
             } else {
-                if (ChessValidator.isChecked(chessBoard, position, Tile.F1)) return false;
+                if (ChessValidator.isChecked(chessBoard, kingPosition, Tile.F1)) return false;
+                rookPosition = Tile.H1;
             }
         } else {
-            if (position != Tile.E8) return false;
-            if (ChessValidator.isChecked(chessBoard, position, Tile.E8)) return false;
+            if (kingPosition != Tile.E8) return false;
+            if (ChessValidator.isChecked(chessBoard, kingPosition, Tile.E8)) return false;
             if (to != Tile.C8 && to != Tile.G8) return false;
             if (to == Tile.C8) {
-                if (ChessValidator.isChecked(chessBoard, position, Tile.D8)) return false;
+                if (ChessValidator.isChecked(chessBoard, kingPosition, Tile.D8)) return false;
+                rookPosition = Tile.A8;
             } else {
-                if (ChessValidator.isChecked(chessBoard, position, Tile.F8)) return false;
+                if (ChessValidator.isChecked(chessBoard, kingPosition, Tile.F8)) return false;
+                rookPosition = Tile.H8;
             }
         }
 
-        Optional<Piece> toPieceOpt = chessBoard.getPiece(to);
+        Optional<Piece> toPieceOpt = chessBoard.getPiece(rookPosition);
         if (toPieceOpt.isEmpty()) return false;
 
         Piece toPiece = toPieceOpt.get();
