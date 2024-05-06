@@ -182,8 +182,10 @@ public class ChessBoard implements Copyable<ChessBoard> {
         }
 
         String unitInitial = piece.getInitial();
-        char assist = getAssist(piece, target, to);
         boolean capture = enemyPiece != null;
+        char assist;
+        if (piece instanceof Pawn && capture) assist = piece.getPosition().getFile();
+        else assist = getAssist(piece, target, to);
         String promotion = getPromotion(piece, to);
         AttackType attackType = getAttackType(piece);
 
