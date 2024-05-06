@@ -98,7 +98,7 @@ public class ChessBoard implements Copyable<ChessBoard> {
     public String toString() {
         StringBuilder sb = new StringBuilder();
 
-        for (int rank = RANK_NUM; rank >= 0; rank--) {
+        for (int rank = RANK_NUM - 1; rank >= 0; rank--) {
             for (int file = 0; file < FILE_NUM; file++) {
                 Tile tile = TileConverter.convertToTile(file, rank);
                 Optional<Piece> pieceOpt = getPiece(tile);
@@ -205,7 +205,8 @@ public class ChessBoard implements Copyable<ChessBoard> {
 
     Stream<Piece> getBoardStream() {
         return Arrays.stream(board)
-                .flatMap(Arrays::stream);
+                .flatMap(Arrays::stream)
+                .filter(Objects::nonNull);
     }
 
     private void setPiece(Piece piece, Tile tile) {
